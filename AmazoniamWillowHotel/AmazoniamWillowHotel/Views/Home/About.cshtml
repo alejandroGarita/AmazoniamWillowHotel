@@ -1,7 +1,94 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About us";
 }
-<h2>@ViewBag.Title.</h2>
+<h1>@ViewBag.Title.</h1>
 <h3>@ViewBag.Message</h3>
+<link rel="stylesheet" href="..\public\style\estilo2.css" type="text/css" />
+    <ul class="galeria">
+        <li><a href="#img1"><img src="..\public\img\laguna1.jpg"></a></li>
+        <li><a href="#img2"><img src="..\public\img\reventazon.jpg"></a></li>
+        <li><a href="#img3"><img src="..\public\img\catarataoculta.jpg"></a></li>
+        <li><a href="#img4"><img src="..\public\img\bajoBonilla.jpg"></a></li>
+        <li><a href="#img5"><img src="..\public\img\tucan.jpg"></a></li>
+        <li><a href="#img6"><img src="..\public\img\laguna.jpg"></a></li>
+        <li><a href="#img7"><img src="..\public\img\represaReventazon.jpg"></a></li>
 
-<p>Use this area to provide additional information.</p>
+
+    </ul>
+
+    <div class="modal" id="img1">
+        <h3>Lagunas Bonilla</h3>
+        <div class="imagen">
+            <a href="#img7">&#60;</a>
+            <a href="#img1"><img src="..\public\img\laguna1.jpg"></a>
+            <a href="#img2">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+
+    <div class="modal" id="img2">
+        <h3>Río Reventazón</h3>
+        <div class="imagen">
+            <a href="#img1">&#60;</a>
+            <a href="#img2"><img src="..\public\img\reventazon.jpg"></a>
+            <a href="#img3">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+
+    <div class="modal" id="img3">
+        <h3>Catarata Oculta</h3>
+        <div class="imagen">
+            <a href="#img2">&#60;</a>
+            <a href="#img3"><img src="..\public\img\catarataoculta.jpg"></a>
+            <a href="#img4">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+
+    <div class="modal" id="img4">
+        <h3>Bajos bonilla</h3>
+        <div class="imagen">
+            <a href="#img3">&#60;</a>
+            <a href="#img4"><img src="..\public\img\bajoBonilla.jpg"></a>
+            <a href="#img5">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+
+    <div class="modal" id="img5">
+        <h3>Tucan de la Zona</h3>
+        <div class="imagen">
+            <a href="#img4">&#60;</a>
+            <a href="#img5"><img src="..\public\img\tucan.jpg"></a>
+            <a href="#img6">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+    <div class="modal" id="img6">
+        <h3>Lagunas los LLanos</h3>
+        <div class="imagen">
+            <a href="#img5">&#60;</a>
+            <a href="#img6"><img src="..\public\img\laguna.jpg"></a>
+            <a href="#img7">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+    <div class="modal" id="img7">
+        <h3>Represa Reventazón</h3>
+        <div class="imagen">
+            <a href="#img6">&#60;</a>
+            <a href="#img7"><img src="..\public\img\represaReventazon.jpg"></a>
+            <a href="#img1">></a>
+        </div>
+        <a class="cerrar" href="">X</a>
+    </div>
+<footer>
+    <h4>
+        Amazoniam Willow Hotel esta ubicado en una zona rica en fauna
+    </h4>
+    <br />
+    <h4>
+        Amazoniam Willow Hotel is located in an area rich in flora and fauna
+    </h4>
+</footer>

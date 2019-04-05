@@ -15,7 +15,7 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Informate más de las atracciones que existen cerca del hotel";
 
             return View();
         }
@@ -26,5 +26,6 @@ namespace AmazoniamWillowHotel.Controllers
 
             return View();
         }
+
     }
 }
