@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -151,6 +159,54 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Administrador.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Caracteristica_Habitacion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cliente.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Estado.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Facilidad.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Galeria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Habitacion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pagina.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Publicidad.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reserva.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tipo_Habitacion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +218,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
     <Content Include="Public\css\bootstrap.css" />
     <Content Include="Public\css\bootstrap.min.css" />
     <Content Include="Public\css\chocolat.css" />
@@ -170,18 +236,29 @@
     <Content Include="Public\css\OpenSans.css" />
     <Content Include="Public\css\style.css" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Public\images\bajoBonilla.jpg" />
     <Content Include="Public\images\banner.jpg" />
+    <Content Include="Public\images\catarataoculta.jpg" />
     <Content Include="Public\images\close.png" />
     <Content Include="Public\images\co.png" />
+    <Content Include="Public\images\i_p_0.jpg" />
     <Content Include="Public\images\i_p_1.jpg" />
     <Content Include="Public\images\i_p_2.jpg" />
     <Content Include="Public\images\i_p_3.jpg" />
     <Content Include="Public\images\i_p_4.jpg" />
     <Content Include="Public\images\i_p_5.jpg" />
     <Content Include="Public\images\i_p_6.jpg" />
+    <Content Include="Public\images\laguna.jpg" />
+    <Content Include="Public\images\laguna1.jpg" />
     <Content Include="Public\images\left.png" />
     <Content Include="Public\images\logo.png" />
+    <Content Include="Public\images\montania.jpg" />
+    <Content Include="Public\images\PH-Reventazon.jpg" />
+    <Content Include="Public\images\represaReventazon.jpg" />
+    <Content Include="Public\images\reventazon.jpg" />
     <Content Include="Public\images\right.png" />
+    <Content Include="Public\images\rioBonilla.jpg" />
+    <Content Include="Public\images\tucan.jpg" />
     <Content Include="Public\images\update.png" />
     <Content Include="Public\js\bootstrap.js" />
     <Content Include="Public\js\bootstrap.min.js" />
@@ -198,6 +275,14 @@
     <Content Include="Public\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.woff2" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -226,7 +311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -240,6 +324,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b60da4c30bb44fdbb9e29d9161446f6c" Name="Diagram1">
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Administrador" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Caracteristica_Habitacion" Width="1.5" PointX="3.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Cliente" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Estado" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Facilidad" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Galeria" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Habitacion" Width="1.5" PointX="3.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Pagina" Width="1.5" PointX="5.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Publicidad" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Reserva" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Amazonian_WillowModel.Tipo_Habitacion" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Tipo_Habitacion_Caracteristica" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Cliente_Reserva" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Estado_Facilidad" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Estado_Galeria" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Estado_Publicidad" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Estado_Reserva" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Habitacion_Reserva" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Amazonian_WillowModel.FK_Tipo_Habitacion_Habitacion" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
