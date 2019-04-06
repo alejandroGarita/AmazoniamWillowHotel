@@ -239,6 +239,7 @@
     <Content Include="Public\images\banner.jpg" />
     <Content Include="Public\images\close.png" />
     <Content Include="Public\images\co.png" />
+    <Content Include="Public\images\i_p_0.jpg" />
     <Content Include="Public\images\i_p_1.jpg" />
     <Content Include="Public\images\i_p_2.jpg" />
     <Content Include="Public\images\i_p_3.jpg" />
