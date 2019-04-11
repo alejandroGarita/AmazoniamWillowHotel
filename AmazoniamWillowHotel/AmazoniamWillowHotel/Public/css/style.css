@@ -41,17 +41,25 @@ hr {
     -moz-box-shadow: 0px 0px 10px #E0E0E0;
     background-color: rgba(255,255,255,0.9);
 }
+/*-- Map --*/
+#map {
+    width: 500px;
+    height: 500px;
+    margin-top: 5%;
+    margin-left: 20%;
+}
 /*-- logo --*/
 .logo{
 	
 }
-.logo-left{
-	float: left;
+.logo-left {
+    padding-top: 1em;
+    float: left;
 }
 /*-- //logo --*/
 /*-- nombre --*/
 .nombre{
-	padding-top: 4.5em;
+	padding-top: 5em;
 }
 /*-- //nombre --*/
 /*-- top-nav --*/
@@ -134,19 +142,42 @@ i.menu,.navbar-default .navbar-nav > li > a:hover i.menu{
     padding: 0;
 }
 /*-- //top-nav --*/
-/*-- publicidad --*/
+/*-- publicidad y promos --*/
 .banner-right1 {
     padding-right: 0;
 }
-.publicidad h2,.publicidad h3{
-	font-size:1.5em;
-	color:#0BB900;
-	margin:0;
-	padding-bottom:.5em;
-	border-bottom:1px solid #0BB900;
+.publicidad {
+    margin: auto;
+    width: 200px;
+    height: 200px;
 }
+.promos {
+    padding-top: 0.7em;
+    width: 175px;
+    height: 175px;
+    float: right;
+}
+.publicidad h2, .publicidad h3 {
+    font-size: 1.5em;
+    color: #0BB900;
+    margin: 0;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #0BB900;
+}
+
 .publicidad h3{
 	margin:2em 0 0 !important;
+}
+.promos h2, .promos h3 {
+    font-size: 1.5em;
+    color: #0BB900;
+    margin: 0;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #0BB900;
+}
+
+.promos h3 {
+    margin: 2em 0 0 !important;
 }
 .panel-group {
     margin: 2em 0;
@@ -199,6 +230,12 @@ i.menu,.navbar-default .navbar-nav > li > a:hover i.menu{
 	color:#000;
 	line-height:1.8em;
 	font-size:14px;
+}
+.promos p {
+    margin: 1em 0 0;
+    color: #000;
+    line-height: 1.8em;
+    font-size: 14px;
 }
 /*-- //publicidad --*/
 /*-- banner --*/
@@ -1375,6 +1412,9 @@ h2.typoh2{
 	.publicidad h2, .publicidad h3 {
 		font-size: 1.3em;
 	}
+    .promos h2, .promos h3 {
+        font-size: 1.3em;
+    }
 	.panel-title > a, .panel-title > small, .panel-title > .small, .panel-title > small > a, .panel-title > .small > a {
 		font-size: 14px;
 	}
@@ -1475,6 +1515,9 @@ h2.typoh2{
 	.publicidad {
 		margin: 2em 0 0;
 	}
+    .promos {
+        margin: 2em 0 0;
+    }
 }
 @media (max-width:767px){
 	.navbar-toggle {
@@ -1502,6 +1545,9 @@ h2.typoh2{
 	.publicidad {
 		margin: 1em 0 0;
 	}
+    .promos {
+        margin: 1em 0 0;
+    }
 }
 @media (max-width:667px){
 	.logo {
@@ -1527,6 +1573,9 @@ h2.typoh2{
 	.publicidad h2, .publicidad h3 {
 		font-size: 1.2em;
 	}
+    .promos h2, .promos h3 {
+        font-size: 1.2em;
+    }
 	.panel-group {
 		margin: 1em 0;
 	}
@@ -1620,6 +1669,10 @@ h2.typoh2{
 		margin: 2em 0 0;
 		text-align: left;
 	}
+    .promos {
+        margin: 2em 0 0;
+        text-align: left;
+    }
 	.panel-group {
 		margin: 2em 0;
 	}
@@ -1712,9 +1765,9 @@ h2.typoh2{
 	.banner, .banner1, .banner2 {
 		min-height: 140px;
 	}
-	.banner-left p,.panel-body,.leave-comment p,.tom-right p.lorem,.cat-grid ul li a,.top-social-icons a,.single-right p,.single p.tortor,.single-left p,.blog-grid-right p,.gallery-head p,.publicidad p,.msg-text-right p,.msg-text-bottom-left p,.footer-left ul li,.footer-left p {
-		font-size: 13px;
-	}
+    .banner-left p, .panel-body, .leave-comment p, .tom-right p.lorem, .cat-grid ul li a, .top-social-icons a, .single-right p, .single p.tortor, .single-left p, .blog-grid-right p, .gallery-head p, .publicidad p, .promos p, .msg-text-right p, .msg-text-bottom-left p, .footer-left ul li, .footer-left p {
+        font-size: 13px;
+    }
 	.leave-comment input[type="text"],.mail-grid1 input[type="text"], .mail-grid1 input[type="email"], .mail-grid1 textarea, .leave-comment textarea, .leave-comment input[type="submit"] {
 		font-size: 13px;
 	}

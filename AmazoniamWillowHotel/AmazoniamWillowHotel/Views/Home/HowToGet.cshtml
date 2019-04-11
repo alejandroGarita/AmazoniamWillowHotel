@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "How To Get";
+}
+
+<div class="row">
+    <h2>¿Como llegar?</h2>
+    <p>¡Fácil y rápido! Te mostramos el camino a seguir para llegar a nosotros, donde sea que estés y cuando quieras podrás consultar que ruta debes tomar para que llegues a Hotel Amazonian Willow sin ningún problema.</p>
+    <div id="map">
+    </div>
+</div>
+
+<script src="~/Public/js/map.js" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1JuYmoq83Om5mLz0qyg_k1viClteC2NU&callback=initMap"></script>
+<script>initMap();</script>

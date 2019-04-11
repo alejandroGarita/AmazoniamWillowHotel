@@ -27,5 +27,10 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }
 
+        public ActionResult HowToGet()
+        {
+            return View();
+        }
+
     }
 }

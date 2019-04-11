@@ -262,6 +262,7 @@
     <Content Include="Public\images\update.png" />
     <Content Include="Public\js\bootstrap.js" />
     <Content Include="Public\js\bootstrap.min.js" />
+    <Content Include="Public\js\map.js" />
     <Content Include="Public\js\jquery-1.11.1.min.js" />
     <Content Include="Public\js\jquery.chocolat.js" />
     <Content Include="Public\js\jquery.min.js" />
@@ -308,6 +309,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\HowToGet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
