@@ -1,6 +1,10 @@
-﻿@{
+﻿
+
+@{
     ViewBag.Title = "Sobre nosotros";
 }
+@using (Html.BeginForm())
+{
 <h2>@ViewBag.Title.</h2>
 
 <div class="modal fade" id="myModal" role="dialog">
@@ -66,7 +70,7 @@
                         <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/tucan.jpg">
                     </div>
                     <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" width="" src="~/Public/images/represaReventazon.jpg">
+                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/represaReventazon.jpg">
                     </div>
                 </div>
                 <br />
@@ -79,6 +83,9 @@
 
 <script>
 $(document).ready(function(){
+
+
+
     $(".mostrarModal").click(function () {
         var modal = $("#myModal");
 
@@ -88,6 +95,14 @@ $(document).ready(function(){
         modal.find('.modal-title').text(titulo);
         modal.find('.modal-body').html('<img width="100%" src="' + img + '" />');
         modal.modal();
-  });
+    });
+
+
+
 });
+
+
+
+
 </script>
+}
