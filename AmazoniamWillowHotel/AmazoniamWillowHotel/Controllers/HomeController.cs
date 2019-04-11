@@ -27,5 +27,18 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }
 
+        public ActionResult Facilities()
+        {
+            Models.FacilitieModel model = new Models.FacilitieModel();
+            ViewData["Facilities"] = model.getFacilities();
+            return View();
+        }
+
+        public ActionResult InsertFacilitie()
+        {
+            Models.StatusModel model = new Models.StatusModel();
+            ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
+            return View();
+        }
     }
 }
