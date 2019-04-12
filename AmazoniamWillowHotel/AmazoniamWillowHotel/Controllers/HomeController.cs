@@ -29,17 +29,18 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult Facilities()
         {
-            Models.FacilitieModel model = new Models.FacilitieModel();
-            //using (var mo = new Models.Hotel_Amazonian_WillowEntities()) {
-            //    ViewData["Facilities"] = mo.Facilidad.ToList();
-            //}
-            ViewData["Facilities"] = model.getFacilities();
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities()) {
+                ViewData["Facilities"] = mo.Facilidad.ToList();
+            }
             return View();
         }
 
         public ActionResult InsertFacilitie()
         {
-            //Models.StatusModel model = new Models.StatusModel();
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["Status"] = new SelectList(mo.Estado.ToList(), "Id_Estado", "Nombre"); 
+            }
             //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
             return View();
         }
