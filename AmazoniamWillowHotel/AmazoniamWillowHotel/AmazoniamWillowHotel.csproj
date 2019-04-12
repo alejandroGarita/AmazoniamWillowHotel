@@ -174,7 +174,6 @@
     <Compile Include="Models\Facilidad.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FacilitieModel.cs" />
     <Compile Include="Models\Galeria.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -311,6 +310,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\HowToGet.cshtml" />
+    <Content Include="Views\Home\Rates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

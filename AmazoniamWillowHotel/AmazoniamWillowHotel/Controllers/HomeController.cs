@@ -49,5 +49,14 @@ namespace AmazoniamWillowHotel.Controllers
         {
             return View();
         }
+
+        public ActionResult Rates()
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["types"] = mo.Tipo_Habitacion.ToList();
+            }
+            return View();
+        }
     }
 }
