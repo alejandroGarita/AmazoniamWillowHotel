@@ -31,6 +31,17 @@ hr {
 	background: url(../images/banner.jpg) no-repeat center fixed;
 	padding:5em 0;
 }
+.formulario {
+    width: 95%;
+    display: flex;
+}
+.banner-formulario {
+    width: 40%;
+    display: block !important;
+}
+    .banner-formulario input, .banner-formulario select {
+        width: 60%;
+    }
 .banner-body-content {
     padding-left: 3em;
     padding-right: 3em;
@@ -47,6 +58,40 @@ hr {
     height: 500px;
     margin-top: 5%;
     margin-left: 20%;
+}
+/*-- processing-modal --*/
+.modal-static {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px;
+    margin-left: -150px;
+    overflow: visible !important;
+}
+
+    .modal-static,
+    .modal-static .modal-dialog,
+    .modal-static .modal-content {
+        width: 300px;
+        height: 180px;
+    }
+
+        .modal-static .modal-dialog,
+        .modal-static .modal-content {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+            .modal-static .modal-content .icon-modal {
+                width: 50%;
+                height: 50%;
+            }
+
+.modal-text {
+    text-align: center;
+    font-family: Cambria;
+    font-weight: bold;
+    font-size: medium;
 }
 /*-- logo --*/
 .logo{
@@ -487,7 +532,16 @@ ul.wmuSliderPagination {
   height: 40px;
   font-size: 0;
   text-indent: -9999px;
-  border-radius: 100%;
+  /*border-radius: 100%;*/
+}
+.icon-modal {
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    font-size: 0;
+    text-indent: -9999px;
 }
 .icon-border {
   position: relative;

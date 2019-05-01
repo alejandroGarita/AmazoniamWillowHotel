@@ -155,6 +155,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +234,9 @@
     <Content Include="Public\css\chocolat.css" />
     <Content Include="Public\css\Comfortaa.css" />
     <Content Include="Public\css\GreatVibes.css" />
+    <Content Include="Public\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="Public\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="Public\css\jquery-ui.css" />
     <Content Include="Public\css\OpenSans.css" />
     <Content Include="Public\css\style.css" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.svg" />
@@ -251,6 +255,8 @@
     <Content Include="Public\images\laguna.jpg" />
     <Content Include="Public\images\laguna1.jpg" />
     <Content Include="Public\images\left.png" />
+    <Content Include="Public\images\loading-card.gif" />
+    <Content Include="Public\images\loading.gif" />
     <Content Include="Public\images\logo.png" />
     <Content Include="Public\images\montania.jpg" />
     <Content Include="Public\images\PH-Reventazon.jpg" />
@@ -262,8 +268,10 @@
     <Content Include="Public\images\update.png" />
     <Content Include="Public\js\bootstrap.js" />
     <Content Include="Public\js\bootstrap.min.js" />
+    <Content Include="Public\js\jquery-ui.js" />
+    <Content Include="Public\js\jquery-ui.min.js" />
+    <Content Include="Public\js\jquery.js" />
     <Content Include="Public\js\map.js" />
-    <Content Include="Public\js\jquery-1.11.1.min.js" />
     <Content Include="Public\js\jquery.chocolat.js" />
     <Content Include="Public\js\jquery.min.js" />
     <Content Include="Public\js\jquery.wmuSlider.js" />
@@ -311,6 +319,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\HowToGet.cshtml" />
     <Content Include="Views\Home\Rates.cshtml" />
+    <Content Include="Views\Reservation\OnlineBook.cshtml" />
+    <Content Include="Views\Reservation\ReservationClient.cshtml" />
+    <Content Include="Views\Reservation\ReservationInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

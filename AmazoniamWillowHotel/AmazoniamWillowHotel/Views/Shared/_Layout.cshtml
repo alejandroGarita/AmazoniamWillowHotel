@@ -13,16 +13,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //for-mobile-apps -->
     <link href="~/Public/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/Public/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Public/css/jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="shortcut icon" type="image/x-icon" href="~/Public/images/logo.png" />
     <!-- js -->
-    <script src="~/Public/js/jquery-1.11.1.min.js"></script>
-    <script src="~/Public/js/jquery.min.js"></script>
+    <script src="~/Public/js/jquery.js"></script>
+    <script src="~/Public/js/jquery-ui.js"></script>
     <script src="~/Public/js/bootstrap.min.js"></script>
+    <script src="~/Public/js/bootstrap.js"></script>
     <!-- //js -->
     <link href='~/Public/css/OpenSans.css' rel='stylesheet' type='text/css'>
     <link href='~/Public/css/GreatVibes.css' rel='stylesheet' type='text/css'>
     <link href='~/Public/css/Comfortaa.css' rel='stylesheet' type='text/css'>
-    <!-- <link href='~/Public/css/bootstrap.min.css' rel='stylesheet' type='text/css'> -->
 </head>
 
 <body>
@@ -85,7 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <li><a href="~/Home/Facilities" class="hvr-underline-from-left"><i class="menu"></i>Facilidades</a></li>
                                         <li><a href="~/Home/HowToGet" class="hvr-underline-from-left"><i class="menu"></i>¿Como Llegar?</a></li>
                                         <li><a href="~/Home/Rates" class="hvr-underline-from-left"><i class="menu"></i>Tarifas</a></li>
-                                        <li><a href="~/Home/BookOnline" class="hvr-underline-from-left"><i class="menu"></i>Reservar en Linea</a></li>
+                                        <li><a href="~/Reservation/OnlineBook" class="hvr-underline-from-left"><i class="menu"></i>Reservar en Linea</a></li>
                                         <li><a href="~/Home/Contact" class="hvr-underline-from-left"><i class="menu"></i>Contactenos</a></li>
                                     </ul>
                                 </nav>
@@ -142,12 +143,5 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </div>
     <!-- //banner-body -->
-    <!-- for bootstrap working -->
-    <script src="~/Public/js/bootstrap.js"></script>
-    <!-- //for bootstrap working -->
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

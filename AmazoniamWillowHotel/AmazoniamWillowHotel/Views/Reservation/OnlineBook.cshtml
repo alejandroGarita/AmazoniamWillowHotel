@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Reservar en linea";
+}
+
+<div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="~/Public/images/loading.gif" class="icon-modal" />
+                    <h5><span class="modal-text">Verificando disponibilidad, Espere por favor... </span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("ReservationClient", "Reservation", FormMethod.Post, new { id = "myForm" }))
+{
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div>
+        <div class="formulario">
+            <div class="banner-formulario">
+                @Html.Label("Tipo de Habitación")
+                <select name="TipoHabitacion" id="TipoHabitacion" class="form-control">
+                    @foreach (var item in (List<AmazoniamWillowHotel.Models.Tipo_Habitacion>)ViewData["types"])
+                    {
+                        <option value="@item.Id_Tipo_Habitacion">@item.Titulo</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="formulario">
+            <div class="banner-formulario">
+                @Html.Label("Fecha de Llegada")
+                <input type="text" id="fechaLlegada" name="fechaLlegada" class="form-control" value="mm/dd/aaaa"/>
+            </div>
+            <div class="banner-formulario">
+                @Html.Label("Fecha de Salida")
+                <input type="text" id="fechaSalida" name="fechaSalida" class="form-control" value="mm/dd/aaaa"/>
+            </div>
+        </div>
+        <p id="spanFecha" class="text-danger"></p>
+        <br />
+        <div>
+            <div style="text-align: center;">
+                <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script>
+    $(function () {
+        var dateFormat = "mm/dd/yy",
+            fechaLlegada = $("#fechaLlegada").datepicker()
+                .on("change", function () {
+                    fechaSalida.datepicker("option", "minDate", getDate(this));
+                    fechaSalida.datepicker("setDate", "mm/dd/aaaa")
+                }),
+            fechaSalida = $("#fechaSalida").datepicker()
+                .on("change", function () {
+                    fechaLlegada.datepicker("option", "maxDate", getDate(this));
+                });
+
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
+            }
+            return date;
+        }
+    });
+
+    $("#Aceptar").click("click", function () {
+        var fechaLlegada = $("#fechaLlegada").val();
+        var fechaSalida = $("#fechaSalida").val();
+        if (fechaLlegada != "" && fechaSalida != "") {
+            var md = $("#processing-modal");
+            md.modal('show');
+
+            $.ajax({
+                type: "POST",
+                url: "/Reservation/process",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'JSON',
+                data: "{}",
+                traditional: true,
+
+                success: function (msg) {
+                    md.modal('hide');
+                    $("#myForm").submit();
+                },
+                error: function (msg) {
+                    md.modal('hide');
+                    alert(msg.d);
+                }
+            });
+        } else {
+            document.getElementById("spanFecha").innerHTML = "Se requiere una fecha de llegada y una fecha de salida para la reservación";
+        }//if-else
+    });
+</script>

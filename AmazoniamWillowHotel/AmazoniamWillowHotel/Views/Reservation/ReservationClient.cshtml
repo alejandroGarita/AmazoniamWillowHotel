@@ -1,0 +1,63 @@
+﻿@model AmazoniamWillowHotel.Models.Tipo_Habitacion
+@{
+    ViewBag.Title = "Información del cliente";
+    string imagen = Model.Imagen;
+    string descripcion = Model.Descripcion;
+}
+
+<div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="~/Public/images/loading-card.gif" class="icon-modal" />
+                    <h5><span class="modal-text">Procesando pago, Espere por favor... </span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.Label("Habitación Disponible")
+            <img width="100%" src="~/Public/images/@imagen">
+        </div>
+        <div class="col-sm-9">
+            <p>@descripcion</p>
+        </div>
+    </div>
+    <br />
+    <br />
+    @Html.Label("Monto de su reservación: " + Model.Tarifa)
+    <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
+    <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-default">
+</div>
+
+<script>
+    $("#Aceptar").click("click", function () {
+        var md = $("#processing-modal");
+        md.modal('show');
+
+        $.ajax({
+            type: "POST",
+            url: "/Reservation/process",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'JSON',
+            data: "{}",
+            traditional: true,
+
+            success: function (msg) {
+                md.modal('hide');
+                alert(msg);
+            },
+            error: function (msg) {
+                md.modal('hide');
+                alert(msg.d);
+            }
+        });
+    });
+</script>
