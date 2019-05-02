@@ -20,9 +20,18 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+
+            return View();
+        }
+
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["Contact"] = mo.Pagina.ToList();
+            }
 
             return View();
         }
