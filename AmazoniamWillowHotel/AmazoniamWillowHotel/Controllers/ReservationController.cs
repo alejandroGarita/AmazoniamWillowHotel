@@ -26,9 +26,13 @@ namespace AmazoniamWillowHotel.Controllers
             {
                 DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
                 DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
-                ObjectResult result = mo.CheckAvailability(TipoHabitacion, fechaLlegada1, fechaSalida1);
-                re
-                return View(mo.Tipo_Habitacion.Find(TipoHabitacion));
+                ObjectResult<Models.CheckAvailability_Result> result = mo.CheckAvailability(TipoHabitacion, fechaLlegada1, fechaSalida1);
+
+                Models.CheckAvailability_Result checkAvailability1 = new Models.CheckAvailability_Result();
+                foreach (Models.CheckAvailability_Result checkAvailability in result)
+                    checkAvailability1 = checkAvailability;
+
+                return View(checkAvailability1);
             }
         }//ReservationClient
 
@@ -37,6 +41,12 @@ namespace AmazoniamWillowHotel.Controllers
             
             return View();
         }//ReservationInformation
+
+        public JsonResult checkAvailability()
+        {
+            Thread.Sleep(3000);
+            return Json("Procesado", JsonRequestBehavior.AllowGet);
+        }//process
 
         public JsonResult process()
         {
