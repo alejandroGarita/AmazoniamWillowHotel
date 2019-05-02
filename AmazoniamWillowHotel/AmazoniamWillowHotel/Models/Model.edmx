@@ -598,6 +598,7 @@
           <Property Type="String" Name="titulo" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="descripcion" Nullable="true" />
           <Property Type="Double" Name="tarifa" Nullable="true" />
+          <Property Type="String" Name="imagen" Nullable="true" MaxLength="1500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -775,6 +776,7 @@
                 <ScalarProperty Name="titulo" ColumnName="titulo" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

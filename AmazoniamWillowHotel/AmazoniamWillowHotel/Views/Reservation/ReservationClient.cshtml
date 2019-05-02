@@ -1,8 +1,8 @@
 ﻿@model AmazoniamWillowHotel.Models.CheckAvailability_Result
 @{
     ViewBag.Title = "Información del cliente";
-    string imagen = Model.Imagen;
-    string descripcion = Model.Descripcion;
+    string imagen = Model.imagen;
+    string descripcion = Model.descripcion;
 }
 
 <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
@@ -32,7 +32,7 @@
     </div>
     <br />
     <br />
-    @Html.Label("Monto de su reservación: " + Model.Tarifa)
+    @Html.Label("Monto de su reservación: " + Model.tarifa)
     <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
     <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-default">
 </div>

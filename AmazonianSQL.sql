@@ -115,21 +115,26 @@ CREATE PROCEDURE sp_checkAvailability @idTipoHabitacion INT, @fechaInicio Date, 
 AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY
-	Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float
-		If exists(SELECT Habitacion.Numero FROM Habitacion WHERE Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1)
-		BEGIN
-			SELECT TOP 1 @numero = Habitacion.Numero, @titulo = Tipo_Habitacion.Titulo, @descripcion = Tipo_Habitacion.Descripcion, @tarifa = Tipo_Habitacion.Tarifa
-			FROM Habitacion, Tipo_Habitacion
-			WHERE Habitacion.Id_Tipo_Habitacion = Tipo_Habitacion.Id_Tipo_Habitacion AND Tipo_Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1;
+		Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float, @imagen varchar(1500)
+			If exists(SELECT Habitacion.Numero FROM Habitacion WHERE Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1)
+			BEGIN
+				SELECT TOP 1 @numero = Habitacion.Numero, @titulo = Tipo_Habitacion.Titulo, @descripcion = Tipo_Habitacion.Descripcion, @tarifa = Tipo_Habitacion.Tarifa, @imagen = Tipo_Habitacion.Imagen
+				FROM Habitacion, Tipo_Habitacion
+				WHERE Habitacion.Id_Tipo_Habitacion = Tipo_Habitacion.Id_Tipo_Habitacion AND Tipo_Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1;
 
-			Update Habitacion Set Habitacion.Id_Estado = 10 Where Habitacion.Numero = @numero;
+				Update Habitacion Set Habitacion.Id_Estado = 10 Where Habitacion.Numero = @numero;
 
-			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa;
-		END
-		Else
-		Begin
-			Select 0 as numero, '' as titulo, 'No hay Habitaciones' as descripcion, 0 as tarifa;
-		End
+				SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
+			END
+			Else
+			Begin
+				Set @numero = 0;
+				Set @titulo = '';
+				Set @descripcion = 'No hay Habitaciones';
+				Set @tarifa = 0;
+				Set @imagen = '';
+				SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
+			End
 	COMMIT TRANSACTION;
 	RETURN (1);
 	END TRY  
@@ -140,10 +145,11 @@ AS BEGIN
         ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure,  
         ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
 		RETURN(-1)
-	END CATCH;  		
+	END CATCH;
 END
 GO
 
+Exec sp_checkAvailability 1, '2019-05-02', '2019-05-02';
 
 CREATE PROCEDURE sp_ConsultarDisponibilidad @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
 AS BEGIN
