@@ -36,11 +36,11 @@
         <div class="formulario">
             <div class="banner-formulario">
                 @Html.Label("Fecha de Llegada")
-                <input type="text" id="fechaLlegada" name="fechaLlegada" class="form-control" value="mm/dd/aaaa"/>
+                <input type="text" id="fechaLlegada" name="fechaLlegada" class="form-control" value="dd/mm/aaaa"/>
             </div>
             <div class="banner-formulario">
                 @Html.Label("Fecha de Salida")
-                <input type="text" id="fechaSalida" name="fechaSalida" class="form-control" value="mm/dd/aaaa"/>
+                <input type="text" id="fechaSalida" name="fechaSalida" class="form-control" value="dd/mm/aaaa"/>
             </div>
         </div>
         <p id="spanFecha" class="text-danger"></p>
@@ -55,13 +55,13 @@
 }
 <script>
     $(function () {
-        var dateFormat = "mm/dd/yy",
-            fechaLlegada = $("#fechaLlegada").datepicker()
+        var dateFormat = "dd/mm/yy",
+            fechaLlegada = $("#fechaLlegada").datepicker({ minDate: 0, dateFormat: dateFormat })
                 .on("change", function () {
                     fechaSalida.datepicker("option", "minDate", getDate(this));
-                    fechaSalida.datepicker("setDate", "mm/dd/aaaa")
+                    fechaSalida.datepicker("setDate", "dd/mm/aaaa")
                 }),
-            fechaSalida = $("#fechaSalida").datepicker()
+            fechaSalida = $("#fechaSalida").datepicker({ minDate: 0, dateFormat: dateFormat })
                 .on("change", function () {
                     fechaLlegada.datepicker("option", "maxDate", getDate(this));
                 });

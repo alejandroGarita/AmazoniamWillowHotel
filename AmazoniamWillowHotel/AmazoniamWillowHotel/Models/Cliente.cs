@@ -20,7 +20,7 @@ namespace AmazoniamWillowHotel.Models
             this.Reserva = new HashSet<Reserva>();
         }
     
-        public string Cedula { get; set; }
+        public string Identificacion { get; set; }
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
         public string Tarjeta { get; set; }

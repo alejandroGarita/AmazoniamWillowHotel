@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="Id_Administrador" />
@@ -23,9 +23,9 @@
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
-            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Identificacion" />
           </Key>
-          <Property Name="Cedula" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Identificacion" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellidos" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Tarjeta" Type="varchar" MaxLength="50" Nullable="false" />
@@ -89,7 +89,7 @@
           </Key>
           <Property Name="Id_Reserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Habitacion" Type="int" Nullable="false" />
-          <Property Name="Cedula_Cliente" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Identificacion_Cliente" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Fecha_Ingreso" Type="datetime" Nullable="false" />
           <Property Name="Fecha_Salida" Type="datetime" Nullable="false" />
           <Property Name="Id_Estado" Type="int" Nullable="false" />
@@ -110,10 +110,10 @@
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
-              <PropertyRef Name="Cedula" />
+              <PropertyRef Name="Identificacion" />
             </Principal>
             <Dependent Role="Reserva">
-              <PropertyRef Name="Cedula_Cliente" />
+              <PropertyRef Name="Identificacion_Cliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -201,6 +201,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_checkAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idTipoHabitacion" Type="int" Mode="In" />
+          <Parameter Name="fechaInicio" Type="date" Mode="In" />
+          <Parameter Name="fechaFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sp_getFacilities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_getPagaForName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre_Pagina" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_insertFacilitie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Imagen" Type="varchar" Mode="In" />
+          <Parameter Name="Id_Estado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_makeReservation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="correo" Type="varchar" Mode="In" />
+          <Parameter Name="tarjeta" Type="varchar" Mode="In" />
+          <Parameter Name="numero" Type="int" Mode="In" />
+          <Parameter Name="fechaLlegada" Type="datetime" Mode="In" />
+          <Parameter Name="fechaSalida" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="Hotel_Amazonian_WillowModelStoreContainer">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Caracteristica_Habitacion" EntityType="Self.Caracteristica_Habitacion" Schema="dbo" store:Type="Tables" />
@@ -246,8 +271,7 @@
             <End Role="Habitacion" EntitySet="Habitacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Hotel_Amazonian_WillowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -270,9 +294,9 @@
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
-            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Identificacion" />
           </Key>
-          <Property Name="Cedula" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Identificacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -346,7 +370,7 @@
           </Key>
           <Property Name="Id_Reserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Habitacion" Type="Int32" Nullable="false" />
-          <Property Name="Cedula_Cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Identificacion_Cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Fecha_Ingreso" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Fecha_Salida" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Id_Estado" Type="Int32" Nullable="false" />
@@ -384,10 +408,10 @@
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
-              <PropertyRef Name="Cedula" />
+              <PropertyRef Name="Identificacion" />
             </Principal>
             <Dependent Role="Reserva">
-              <PropertyRef Name="Cedula_Cliente" />
+              <PropertyRef Name="Identificacion_Cliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -507,7 +531,74 @@
             <End Role="Tipo_Habitacion" EntitySet="Tipo_Habitacion" />
             <End Role="Habitacion" EntitySet="Habitacion" />
           </AssociationSet>
+          <FunctionImport Name="sp_checkAvailability" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_checkAvailability_Result)">
+            <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getFacilities" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_getFacilities_Result)" />
+          <FunctionImport Name="sp_getPagaForName" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_getPagaForName_Result)">
+          <Parameter Name="Nombre_Pagina" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getStatus" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_getStatus_Result)" />
+          <FunctionImport Name="sp_insertFacilitie">
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Imagen" Mode="In" Type="String" />
+            <Parameter Name="Id_Estado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_makeReservation" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_makeReservation_Result)">
+            <Parameter Name="identificacion" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="tarjeta" Mode="In" Type="String" />
+            <Parameter Name="numero" Mode="In" Type="Int32" />
+            <Parameter Name="fechaLlegada" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaSalida" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="CheckAvailability" ReturnType="Collection(Hotel_Amazonian_WillowModel.CheckAvailability_Result)">
+            <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_checkAvailability_Result">
+          <Property Type="Int32" Name="numero" Nullable="true" />
+          <Property Type="String" Name="titulo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="true" />
+          <Property Type="Double" Name="tarifa" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getFacilities_Result">
+          <Property Type="Int32" Name="Id_Facilidad" Nullable="false" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1500" />
+          <Property Type="String" Name="Imagen" Nullable="false" MaxLength="1500" />
+          <Property Type="Int32" Name="Id_Estado" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_getPagaForName_Result">
+          <Property Type="Int32" Name="Id_Pagina" Nullable="false" />
+          <Property Type="String" Name="Nombre_Pagina" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1500" />
+          <Property Type="String" Name="Imagen" Nullable="false" MaxLength="1500" />
+        </ComplexType>
+        <ComplexType Name="sp_getStatus_Result">
+          <Property Type="Int32" Name="Id_Estado" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_makeReservation_Result">
+          <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
+          <Property Type="Int32" Name="ErrorSeverity" Nullable="true" />
+          <Property Type="Int32" Name="ErrorState" Nullable="true" />
+          <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="ErrorLine" Nullable="true" />
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="CheckAvailability_Result">
+          <Property Type="Int32" Name="numero" Nullable="true" />
+          <Property Type="String" Name="titulo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="true" />
+          <Property Type="Double" Name="tarifa" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -535,7 +626,7 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="Hotel_Amazonian_WillowModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="Tarjeta" ColumnName="Tarjeta" />
@@ -606,7 +697,7 @@
               <MappingFragment StoreEntitySet="Reserva">
                 <ScalarProperty Name="Id_Reserva" ColumnName="Id_Reserva" />
                 <ScalarProperty Name="Id_Habitacion" ColumnName="Id_Habitacion" />
-                <ScalarProperty Name="Cedula_Cliente" ColumnName="Cedula_Cliente" />
+                <ScalarProperty Name="Identificacion_Cliente" ColumnName="Identificacion_Cliente" />
                 <ScalarProperty Name="Fecha_Ingreso" ColumnName="Fecha_Ingreso" />
                 <ScalarProperty Name="Fecha_Salida" ColumnName="Fecha_Salida" />
                 <ScalarProperty Name="Id_Estado" ColumnName="Id_Estado" />
@@ -625,6 +716,68 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_checkAvailability" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_checkAvailability">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_checkAvailability_Result">
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getFacilities" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_getFacilities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_getFacilities_Result">
+                <ScalarProperty Name="Id_Facilidad" ColumnName="Id_Facilidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Id_Estado" ColumnName="Id_Estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getPagaForName" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_getPagaForName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_getPagaForName_Result">
+                <ScalarProperty Name="Id_Pagina" ColumnName="Id_Pagina" />
+                <ScalarProperty Name="Nombre_Pagina" ColumnName="Nombre_Pagina" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getStatus" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_getStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_getStatus_Result">
+                <ScalarProperty Name="Id_Estado" ColumnName="Id_Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_insertFacilitie" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_insertFacilitie" />
+          <FunctionImportMapping FunctionImportName="sp_makeReservation" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_makeReservation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_makeReservation_Result">
+                <ScalarProperty Name="ErrorNumber" ColumnName="ErrorNumber" />
+                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
+                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckAvailability" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_checkAvailability">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.CheckAvailability_Result">
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

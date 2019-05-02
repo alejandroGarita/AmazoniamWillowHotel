@@ -128,7 +128,7 @@ AS BEGIN
 		END
 		Else
 		Begin
-			Select 'No hay Habitaciones' as respuesta;
+			Select 0 as numero, '' as titulo, 'No hay Habitaciones' as descripcion, 0 as tarifa;
 		End
 	COMMIT TRANSACTION;
 	RETURN (1);
@@ -176,4 +176,37 @@ AS BEGIN
 		RETURN(-1)
 	END CATCH;  		
 END
+GO
+
+CREATE PROCEDURE sp_makeReservation @identificacion VARCHAR(25), @nombre VARCHAR(50), @apellidos VARCHAR(50), @correo VARCHAR(50), 
+	@tarjeta VARCHAR(50), @numero INT, @fechaLlegada DATETIME, @fechaSalida DATETIME
+									 
+AS BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY  
+	
+	IF NOT EXISTS (SELECT * FROM Cliente WHERE Correo = @correo) BEGIN
+		INSERT INTO Cliente VALUES (@identificacion, @nombre, @apellidos, @tarjeta, @correo)
+	END	
+	Declare @idHabitacion int
+
+	Select @idHabitacion = id_Habitacion from Habitacion where Numero = @numero;
+
+	INSERT INTO Reserva (Id_Habitacion, Identificacion_Cliente, Fecha_Ingreso, Fecha_Salida, Id_Estado)
+	VALUES(@idHabitacion, @identificacion, @fechaLlegada, @fechaSalida, 9);	
+	
+	COMMIT TRANSACTION;
+	RETURN (1);
+	END TRY  
+	BEGIN CATCH  
+		rollback		
+		SELECT   
+        ERROR_NUMBER() AS ErrorNumber, ERROR_SEVERITY() AS ErrorSeverity  
+        ,ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure  
+        ,ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
+		return(-1)
+		
+	END CATCH;  		
+END
+
 GO
