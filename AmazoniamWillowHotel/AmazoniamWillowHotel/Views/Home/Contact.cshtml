@@ -1,16 +1,10 @@
 ﻿@foreach (var item in (List<AmazoniamWillowHotel.Models.Pagina>)ViewData["Contact"])
 {
         <address>
-            <h3>@item.Descripcion</h3>
-            <strong>Support:</strong>   <a href="hotelwillow@gamil.com">hoptelwillow@example.com</a><br />
-            <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+            <h4>@item.Descripcion</h4>
+            <strong>Consulting:</strong>   <a href="hotelwillow@gamil.com">hotelwillow@gamil.com</a><br />
         </address>
         <div class="col-xs-3">
             <img class="mostrarModal" width="300%" alt="Contáctenos" src="~/Public/images/@item.Imagen">
         </div>
 }
-
-
-<address>
-   
-</address>
