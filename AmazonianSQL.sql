@@ -143,3 +143,37 @@ AS BEGIN
 	END CATCH;  		
 END
 GO
+
+
+CREATE PROCEDURE sp_ConsultarDisponibilidad @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
+AS BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+	Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float
+		If exists(SELECT Habitacion.numero FROM Habitacion WHERE Habitacion.tipo = @idTipoHabitacion AND Habitacion.estado = 1)
+		BEGIN
+			SELECT TOP 1 @numero = Habitacion.numero, @titulo = Tipo_Habitacion.titulo, @descripcion = Tipo_Habitacion.descripcion, @tarifa = Tipo_Habitacion.tarifa
+			FROM Habitacion, Tipo_Habitacion
+			WHERE Habitacion.tipo = Tipo_Habitacion.id AND Tipo_Habitacion.id = @idTipoHabitacion AND Habitacion.estado = 1;
+
+			Update Habitacion Set Habitacion.estado = 10 Where Habitacion.numero = @numero;
+
+			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa;
+		END
+		Else
+		Begin
+			Select 'No hay Habitaciones' as respuesta;
+		End
+	COMMIT TRANSACTION;
+	RETURN (1);
+	END TRY  
+	BEGIN CATCH  
+		ROLLBACK		
+		SELECT   
+        ERROR_NUMBER() AS ErrorNumber, ERROR_SEVERITY() AS ErrorSeverity,
+        ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure,  
+        ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
+		RETURN(-1)
+	END CATCH;  		
+END
+GO
