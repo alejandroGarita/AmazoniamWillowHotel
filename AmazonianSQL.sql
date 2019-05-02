@@ -62,7 +62,6 @@ CREATE TABLE Caracteristica(
 
 CREATE TABLE Reservacion(
 	id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	numero INT UNIQUE NOT NULL,
 	identificacion varchar(25),
 	nombre VARCHAR(100) NOT NULL,
 	apellidos VARCHAR(100) NOT NULL,
@@ -110,3 +109,37 @@ CREATE TABLE Administrador(
 	correo VARCHAR(100) NOT NULL UNIQUE,
 	contrasenna VARCHAR(100) NOT NULL
 );
+
+--------------------------------------------------------
+CREATE PROCEDURE sp_checkAvailability @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
+AS BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+	Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float
+		If exists(SELECT Habitacion.Numero FROM Habitacion WHERE Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1)
+		BEGIN
+			SELECT TOP 1 @numero = Habitacion.Numero, @titulo = Tipo_Habitacion.Titulo, @descripcion = Tipo_Habitacion.Descripcion, @tarifa = Tipo_Habitacion.Tarifa
+			FROM Habitacion, Tipo_Habitacion
+			WHERE Habitacion.Id_Tipo_Habitacion = Tipo_Habitacion.Id_Tipo_Habitacion AND Tipo_Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1;
+
+			Update Habitacion Set Habitacion.Id_Estado = 10 Where Habitacion.Numero = @numero;
+
+			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa;
+		END
+		Else
+		Begin
+			Select 'No hay Habitaciones' as respuesta;
+		End
+	COMMIT TRANSACTION;
+	RETURN (1);
+	END TRY  
+	BEGIN CATCH  
+		ROLLBACK		
+		SELECT   
+        ERROR_NUMBER() AS ErrorNumber, ERROR_SEVERITY() AS ErrorSeverity,
+        ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure,  
+        ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
+		RETURN(-1)
+	END CATCH;  		
+END
+GO
