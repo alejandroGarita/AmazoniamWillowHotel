@@ -21,9 +21,13 @@
 <div class="row">
     <h2>@ViewBag.Title</h2>
     <br />
+    @Html.Label("Habitación " + Model.titulo + " Disponible - Habitación número: " + Model.numero)
+    <br />
+    <br />
+    <input type="hidden" id="fechaLlegada" name="fechaLlegada" class="form-control" value="@ViewData["fechaLlegada"]"/>
+    <input type="hidden" id="fechaSalida" name="fechaSalida" class="form-control" value="@ViewData["fechaSalida"]"/>
     <div class="row">
         <div class="col-sm-3">
-            @Html.Label("Habitación Disponible")
             <img width="100%" src="~/Public/images/@imagen">
         </div>
         <div class="col-sm-9">

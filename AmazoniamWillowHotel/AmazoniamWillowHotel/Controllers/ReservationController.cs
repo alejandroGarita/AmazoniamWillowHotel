@@ -20,7 +20,27 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }//OnlineBook
 
-        public ActionResult ReservationClient(int TipoHabitacion, String fechaLlegada, String fechaSalida)
+        public ActionResult ReservationClient(int numero, String titulo, String descripcion, double tarifa, String imagen, String fechaLlegada, String fechaSalida)
+        {
+            Models.CheckAvailability_Result checkAvailability = new Models.CheckAvailability_Result();
+
+            checkAvailability.numero = numero;
+            checkAvailability.titulo = titulo;
+            checkAvailability.descripcion = descripcion;
+            checkAvailability.tarifa = tarifa;
+            checkAvailability.imagen = imagen;
+            ViewData["fechaLlegada"] = fechaLlegada;
+            ViewData["fechaSalida"] = fechaSalida;
+            return View(checkAvailability);
+        }//ReservationClient
+
+        public ActionResult ReservationInformation()
+        {
+            
+            return View();
+        }//ReservationInformation
+
+        public JsonResult checkAvailability(int TipoHabitacion, String fechaLlegada, String fechaSalida)
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
@@ -32,20 +52,9 @@ namespace AmazoniamWillowHotel.Controllers
                 foreach (Models.CheckAvailability_Result checkAvailability in result)
                     checkAvailability1 = checkAvailability;
 
-                return View(checkAvailability1);
+                Thread.Sleep(3000);
+                return Json(checkAvailability1, JsonRequestBehavior.AllowGet);
             }
-        }//ReservationClient
-
-        public ActionResult ReservationInformation()
-        {
-            
-            return View();
-        }//ReservationInformation
-
-        public JsonResult checkAvailability()
-        {
-            Thread.Sleep(3000);
-            return Json("Procesado", JsonRequestBehavior.AllowGet);
         }//process
 
         public JsonResult process()

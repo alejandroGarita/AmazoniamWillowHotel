@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Reservar en linea";
 }
 
@@ -15,8 +17,6 @@
     </div>
 </div>
 
-@using (Html.BeginForm("ReservationClient", "Reservation", FormMethod.Post, new { id = "myForm" }))
-{
 <div class="row">
     <h2>@ViewBag.Title</h2>
     <br />
@@ -33,16 +33,24 @@
             </div>
         </div>
         <br />
-        <div class="formulario">
-            <div class="banner-formulario">
-                @Html.Label("Fecha de Llegada")
-                <input type="text" id="fechaLlegada" name="fechaLlegada" class="form-control" value="dd/mm/aaaa"/>
+        @using (Html.BeginForm("ReservationClient", "Reservation", FormMethod.Post, new { id = "myForm" }))
+        {
+            <input type="hidden" id="numero" name="numero" class="form-control" />
+            <input type="hidden" id="titulo" name="titulo" class="form-control" />
+            <input type="hidden" id="descripcion" name="descripcion" class="form-control" />
+            <input type="hidden" id="tarifa" name="tarifa" class="form-control" />
+            <input type="hidden" id="imagen" name="imagen" class="form-control" />
+            <div class="formulario">
+                <div class="banner-formulario">
+                    @Html.Label("Fecha de Llegada")
+                    <input type="text" id="fechaLlegada" name="fechaLlegada" class="form-control" value="dd/mm/aaaa" />
+                </div>
+                <div class="banner-formulario">
+                    @Html.Label("Fecha de Salida")
+                    <input type="text" id="fechaSalida" name="fechaSalida" class="form-control" value="dd/mm/aaaa" />
+                </div>
             </div>
-            <div class="banner-formulario">
-                @Html.Label("Fecha de Salida")
-                <input type="text" id="fechaSalida" name="fechaSalida" class="form-control" value="dd/mm/aaaa"/>
-            </div>
-        </div>
+        }
         <p id="spanFecha" class="text-danger"></p>
         <br />
         <div>
@@ -52,7 +60,6 @@
         </div>
     </div>
 </div>
-}
 <script>
     $(function () {
         var dateFormat = "dd/mm/yy",
@@ -80,25 +87,36 @@
     $("#Aceptar").click("click", function () {
         var fechaLlegada = $("#fechaLlegada").val();
         var fechaSalida = $("#fechaSalida").val();
+        var tipoHabitacion = $("#TipoHabitacion").val();
         if (fechaLlegada != "" && fechaSalida != "") {
             var md = $("#processing-modal");
             md.modal('show');
 
             $.ajax({
-                type: "POST",
-                url: "/Reservation/process",
-                contentType: "application/json; charset=utf-8",
-                dataType: 'JSON',
-                data: "{}",
-                traditional: true,
+                type: 'POST',
+                url: "/Reservation/checkAvailability",
+                dataType: 'json',
+                data: { TipoHabitacion: tipoHabitacion, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida },
 
-                success: function (msg) {
-                    md.modal('hide');
-                    $("#myForm").submit();
+                success: function (checkAvailability1) {
+                    if (checkAvailability1 != "") {
+                        if (checkAvailability1.descripcion == "No hay Habitaciones") {
+                            md.modal('hide');
+                            alert('No hay habitaciones disponibles');
+                        } else {
+                            md.modal('hide');
+                            document.getElementById('numero').value = checkAvailability1.numero;
+                            document.getElementById('titulo').value = checkAvailability1.titulo;
+                            document.getElementById('descripcion').value = checkAvailability1.descripcion;
+                            document.getElementById('tarifa').value = checkAvailability1.tarifa;
+                            document.getElementById('imagen').value = checkAvailability1.imagen;
+                            $("#myForm").submit();
+                        }//if-else
+                    }//if retorno algo
                 },
-                error: function (msg) {
+                error: function (ex) {
                     md.modal('hide');
-                    alert(msg.d);
+                    alert('Fallo al verificar la disponibilidad.' + ex);
                 }
             });
         } else {

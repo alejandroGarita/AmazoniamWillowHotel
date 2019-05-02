@@ -270,6 +270,7 @@
     <Content Include="Public\images\i_p_4.jpg" />
     <Content Include="Public\images\i_p_5.jpg" />
     <Content Include="Public\images\i_p_6.jpg" />
+    <Content Include="Public\images\junior.jpg" />
     <Content Include="Public\images\laguna.jpg" />
     <Content Include="Public\images\laguna1.jpg" />
     <Content Include="Public\images\left.png" />
@@ -278,10 +279,12 @@
     <Content Include="Public\images\logo.png" />
     <Content Include="Public\images\montania.jpg" />
     <Content Include="Public\images\PH-Reventazon.jpg" />
+    <Content Include="Public\images\premiun.jpg" />
     <Content Include="Public\images\represaReventazon.jpg" />
     <Content Include="Public\images\reventazon.jpg" />
     <Content Include="Public\images\right.png" />
     <Content Include="Public\images\rioBonilla.jpg" />
+    <Content Include="Public\images\standart.jpg" />
     <Content Include="Public\images\tucan.jpg" />
     <Content Include="Public\images\update.png" />
     <Content Include="Public\js\bootstrap.js" />
