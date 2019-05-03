@@ -102,7 +102,7 @@
                     if (checkAvailability1 != "") {
                         if (checkAvailability1.descripcion == "No hay Habitaciones") {
                             md.modal('hide');
-                            alert('No hay habitaciones disponibles');
+                            location.href = "RoomNotAvailable";
                         } else {
                             md.modal('hide');
                             document.getElementById('numero').value = checkAvailability1.numero;
