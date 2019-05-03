@@ -34,10 +34,15 @@ namespace AmazoniamWillowHotel.Controllers
             return View(checkAvailability);
         }//ReservationClient
 
-        public ActionResult ReservationInformation()
+        public ActionResult ReservationInformation(String nombreCompleto, String correo_, int numeroReserva)
         {
-            
-            return View();
+            Models.MakeReservation_Result makeReservation = new Models.MakeReservation_Result();
+
+            makeReservation.nombre = nombreCompleto;
+            makeReservation.correo = correo_;
+            makeReservation.numeroReserva = numeroReserva;
+
+            return View(makeReservation);
         }//ReservationInformation
 
         public JsonResult checkAvailability(int TipoHabitacion, String fechaLlegada, String fechaSalida)
@@ -55,13 +60,33 @@ namespace AmazoniamWillowHotel.Controllers
                 Thread.Sleep(3000);
                 return Json(checkAvailability1, JsonRequestBehavior.AllowGet);
             }
-        }//process
+        }//checkAvailability
 
-        public JsonResult process()
+        public JsonResult makeReservation(String identificacion, String nombre, String apellidos, String correo, String tarjeta, int numero, String fechaLlegada, String fechaSalida)
         {
-            Thread.Sleep(3000);
-            return Json("Procesado", JsonRequestBehavior.AllowGet);
-        }//process
-        
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
+                DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
+                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1);
+
+                Models.MakeReservation_Result makeReservation1 = new Models.MakeReservation_Result();
+                foreach (Models.MakeReservation_Result makeReservation in result)
+                    makeReservation1 = makeReservation;
+
+                Thread.Sleep(3000);
+                return Json(makeReservation1, JsonRequestBehavior.AllowGet);
+            }
+        }//makeReservation
+
+        public JsonResult freeRoom(int numero)
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                mo.FreeRoom(numero);
+                
+                return Json("Cancelado", JsonRequestBehavior.AllowGet);
+            }
+        }//freeRoom
     }
 }

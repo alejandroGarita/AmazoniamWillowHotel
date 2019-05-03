@@ -1,9 +1,25 @@
-﻿@{
+﻿@model AmazoniamWillowHotel.Models.MakeReservation_Result
+@{
     ViewBag.Title = "Información de la reserva";
+    string nombre = Model.nombre;
+    string correo = Model.correo;
+    int? numeroReserva = Model.numeroReserva;
 }
+
 
 <div class="row">
     <h2>@ViewBag.Title</h2>
     <br />
-
+    <br />
+    <h2>Reservación realizada!</h2>
+    <br />
+    <h2>Gracias @nombre!! Su reservación fue realizada exitosamente.</h2>
+    <br />
+    <h2>Número de reservación: @numeroReserva</h2>
+    <br />
+    <h2>Acabamos de enviar esta información a la dirección @correo para mayor facilidad.</h2>
+    <br />
+    <br />
+    <h2>Gracias por preferirnos!</h2>
+    <br />
 </div>

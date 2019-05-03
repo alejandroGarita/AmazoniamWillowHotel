@@ -3,6 +3,7 @@
     ViewBag.Title = "Información del cliente";
     string imagen = Model.imagen;
     string descripcion = Model.descripcion;
+    int? numero = Model.numero;
 }
 
 <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
@@ -24,8 +25,9 @@
     @Html.Label("Habitación " + Model.titulo + " Disponible - Habitación número: " + Model.numero)
     <br />
     <br />
-    <input type="hidden" id="fechaLlegada" name="fechaLlegada" class="form-control" value="@ViewData["fechaLlegada"]"/>
-    <input type="hidden" id="fechaSalida" name="fechaSalida" class="form-control" value="@ViewData["fechaSalida"]"/>
+    <input type="hidden" id="fechaLlegada" name="fechaLlegada" class="form-control" value="@ViewData["fechaLlegada"]" />
+    <input type="hidden" id="fechaSalida" name="fechaSalida" class="form-control" value="@ViewData["fechaSalida"]" />
+    <input type="hidden" id="numero" name="numero" class="form-control" value="@numero" />
     <div class="row">
         <div class="col-sm-3">
             <img width="100%" src="~/Public/images/@imagen">
@@ -37,31 +39,99 @@
     <br />
     <br />
     @Html.Label("Monto de su reservación: " + Model.tarifa)
+    <br />
+    <br />
+    @Html.Label("Identificación:")
+    <input type="text" id="identificacion" name="identificacion" class="form-control" />
+    <p id="spanIdentificacion" class="text-danger"></p>
+    @Html.Label("Nombre:")
+    <input type="text" id="nombre" name="nombre" class="form-control" />
+    @Html.Label("Apellidos:")
+    <input type="text" id="apellidos" name="apellidos" class="form-control" />
+    <p id="spanNombre" class="text-danger"></p>
+    @Html.Label("Email:")
+    <input type="text" id="correo" name="correo" class="form-control" />
+    <p id="spanCorreo" class="text-danger"></p>
+    @Html.Label("Tarjeta de credito:")
+    <input type="text" id="tarjeta" name="tarjeta" class="form-control" />
+    <p id="spanTarjeta" class="text-danger"></p>
     <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
     <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-default">
+    @using (Html.BeginForm("ReservationInformation", "Reservation", FormMethod.Post, new { id = "myForm" }))
+    {
+        <input type="hidden" id="nombreCompleto" name="nombreCompleto" class="form-control" />
+        <input type="hidden" id="correo_" name="correo_" class="form-control" />
+        <input type="hidden" id="numeroReserva" name="numeroReserva" class="form-control" />
+    }
 </div>
 
 <script>
     $("#Aceptar").click("click", function () {
-        var md = $("#processing-modal");
-        md.modal('show');
+        var identificacion = $("#identificacion").val();
+        var nombre = $("#nombre").val();
+        var apellidos = $("#apellidos").val();
+        var correo = $("#correo").val();
+        var tarjeta = $("#tarjeta").val();
+        var numero = $("#numero").val();
+        var fechaLlegada = $("#fechaLlegada").val();
+        var fechaSalida = $("#fechaSalida").val();
+        if (identificacion != "") {
+            if (nombre != "" && apellidos != "") {
+                if (correo != "") {
+                    if (tarjeta != "") {
+                        var md = $("#processing-modal");
+                        md.modal('show');
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "/Reservation/makeReservation",
+                            dataType: 'json',
+                            data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida },
+
+                            success: function (makeReservation1) {
+                                if (makeReservation1 != "") {
+                                    md.modal('hide');
+                                    document.getElementById('nombreCompleto').value = makeReservation1.nombre;
+                                    document.getElementById('correo_').value = makeReservation1.correo;
+                                    document.getElementById('numeroReserva').value = makeReservation1.numeroReserva;
+                                    $("#myForm").submit();
+                                }//if retorno algo
+                            },
+                            error: function (ex) {
+                                md.modal('hide');
+                                alert('Fallo al procesar la reservación.' + ex);
+                            }
+                        });
+                    } else {
+                        document.getElementById("spanTarjeta").innerHTML = "Se requiere una tarjeta para procesar la reservación";
+                    }//if-else tarjeta
+                } else {
+                    document.getElementById("spanCorreo").innerHTML = "Se requiere un correo para procesar la reservación";
+                }//if-else correo
+            } else {
+                document.getElementById("spanNombre").innerHTML = "Se requiere el nombre y los apellidos para procesar la reservación";
+            }//if-else nombre
+        } else {
+            document.getElementById("spanIdentificacion").innerHTML = "Se requiere una identificación para procesar la reservación";
+        }//if-else identificacion
+    });
+
+    $("#Cancelar").click("click", function () {
+        var numero = $("#numero").val();
 
         $.ajax({
-            type: "POST",
-            url: "/Reservation/process",
-            contentType: "application/json; charset=utf-8",
-            dataType: 'JSON',
-            data: "{}",
-            traditional: true,
+            type: 'POST',
+            url: "/Reservation/freeRoom",
+            dataType: 'json',
+            data: { numero: numero},
 
             success: function (msg) {
-                md.modal('hide');
-                alert(msg);
+                location.href = "OnlineBook";
             },
-            error: function (msg) {
-                md.modal('hide');
-                alert(msg.d);
+            error: function (ex) {
+                alert('Fallo al cancelar la reserva.' + ex);
             }
         });
+                    
     });
 </script>

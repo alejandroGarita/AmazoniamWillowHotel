@@ -190,17 +190,22 @@ CREATE PROCEDURE sp_makeReservation @identificacion VARCHAR(25), @nombre VARCHAR
 AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY  
-	
+	Declare @numeroReserva int, @idHabitacion int
 	IF NOT EXISTS (SELECT * FROM Cliente WHERE Correo = @correo) BEGIN
 		INSERT INTO Cliente VALUES (@identificacion, @nombre, @apellidos, @tarjeta, @correo)
 	END	
-	Declare @idHabitacion int
 
 	Select @idHabitacion = id_Habitacion from Habitacion where Numero = @numero;
 
 	INSERT INTO Reserva (Id_Habitacion, Identificacion_Cliente, Fecha_Ingreso, Fecha_Salida, Id_Estado)
 	VALUES(@idHabitacion, @identificacion, @fechaLlegada, @fechaSalida, 9);	
 	
+	Select @numeroReserva = id_Reserva From Reserva where @idHabitacion = Id_Habitacion AND @identificacion = Identificacion_Cliente AND @fechaLlegada = Fecha_Ingreso AND @fechaSalida = Fecha_Salida;
+
+	Update Habitacion Set Habitacion.Id_Estado = 9 where Habitacion.Numero = @numero;
+
+	SELECT @nombre + ' ' + @apellidos as nombre, @numeroReserva as numeroReserva, @correo as correo;
+
 	COMMIT TRANSACTION;
 	RETURN (1);
 	END TRY  
@@ -215,4 +220,27 @@ AS BEGIN
 	END CATCH;  		
 END
 
+GO
+
+CREATE PROCEDURE sp_freeRoom @numero INT
+									 
+AS BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY  
+	
+	Update Habitacion Set Habitacion.Id_Estado = 1 where Habitacion.Numero = @numero;
+
+	COMMIT TRANSACTION;
+	RETURN (1);
+	END TRY  
+	BEGIN CATCH  
+		rollback		
+		SELECT   
+        ERROR_NUMBER() AS ErrorNumber, ERROR_SEVERITY() AS ErrorSeverity  
+        ,ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure  
+        ,ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
+		return(-1)
+		
+	END CATCH;  		
+END
 GO
