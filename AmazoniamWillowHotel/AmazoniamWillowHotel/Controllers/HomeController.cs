@@ -20,12 +20,6 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }
 
-        public ActionResult Login()
-        {
-
-            return View();
-        }
-
         public ActionResult Contact()
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
