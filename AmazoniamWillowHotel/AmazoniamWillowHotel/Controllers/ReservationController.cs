@@ -123,5 +123,5 @@ namespace AmazoniamWillowHotel.Controllers
                 email.Dispose();
             }
         }//correo
-    }
-}
+    }//class
+}//namespace
