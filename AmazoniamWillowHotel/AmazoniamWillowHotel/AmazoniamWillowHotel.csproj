@@ -349,6 +349,7 @@
     <Content Include="Views\Reservation\OnlineBook.cshtml" />
     <Content Include="Views\Reservation\ReservationClient.cshtml" />
     <Content Include="Views\Reservation\ReservationInformation.cshtml" />
+    <Content Include="Views\Reservation\RoomNotAvailable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

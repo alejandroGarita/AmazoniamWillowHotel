@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading;
 using System.Data.Entity.Core.Objects;
+using System.Net.Mail;
+using System.Net;
 
 namespace AmazoniamWillowHotel.Controllers
 {
@@ -42,8 +44,15 @@ namespace AmazoniamWillowHotel.Controllers
             makeReservation.correo = correo_;
             makeReservation.numeroReserva = numeroReserva;
 
+            correo(nombreCompleto, correo_, numeroReserva);
+
             return View(makeReservation);
         }//ReservationInformation
+
+        public ActionResult RoomNotAvailable()
+        {
+            return View();
+        }//RoomNotAvailable
 
         public JsonResult checkAvailability(int TipoHabitacion, String fechaLlegada, String fechaSalida)
         {
@@ -88,5 +97,31 @@ namespace AmazoniamWillowHotel.Controllers
                 return Json("Cancelado", JsonRequestBehavior.AllowGet);
             }
         }//freeRoom
+
+        public void correo(String nombreCompleto, String correo_, int numeroReserva)
+        {
+            MailMessage email = new MailMessage();
+            email.To.Add(new MailAddress(correo_));
+            email.From = new MailAddress("hotelamazonianwillow@gmail.com");
+            email.Subject = "Reservación Comprobante ( " + DateTime.Now.ToString("dd/MM/yyy hh:mm:ss") + " ) ";
+            email.Body = "<p>Reservación realizada!</p><br/><p>Gracias "+nombreCompleto+"!! Su reservación fue realizada exitosamente.</p><br/><p>Número de reservación: "+numeroReserva+"</p><br/><p>Gracias por preferirnos!</p>";
+            email.IsBodyHtml = true;
+            email.Priority = MailPriority.Normal;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 25;
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("hotelamazonianwillow@gmail.com", "HAW_2019");
+
+            try
+            {
+                smtp.Send(email);
+            }
+            catch (Exception except)
+            {
+                email.Dispose();
+            }
+        }//correo
     }
 }
