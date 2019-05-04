@@ -17,16 +17,17 @@ namespace AmazoniamWillowHotel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Habitacion()
         {
-            this.Reserva = new HashSet<Reserva>();
+            this.Reservacion = new HashSet<Reservacion>();
         }
     
-        public int Id_Habitacion { get; set; }
-        public int Numero { get; set; }
-        public int Id_Tipo_Habitacion { get; set; }
-        public int Id_Estado { get; set; }
+        public int id { get; set; }
+        public int numero { get; set; }
+        public int estado { get; set; }
+        public int tipo { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Reserva> Reserva { get; set; }
+        public virtual Estado Estado1 { get; set; }
         public virtual Tipo_Habitacion Tipo_Habitacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reservacion> Reservacion { get; set; }
     }
 }

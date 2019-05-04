@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,7 +27,7 @@ namespace AmazoniamWillowHotel.Controllers
 
                     using (var model = new Models.Hotel_Amazonian_WillowEntities())
                     {
-                        if (model.Administrador.Where(x => x.Correo == username && x.Contrasena == password).FirstOrDefault() != null)
+                        if (model.Administrador.Where(x => x.correo == username && x.contrasenna == password).FirstOrDefault() != null)
                         {
                             Session["username"] = username;
                             return View();

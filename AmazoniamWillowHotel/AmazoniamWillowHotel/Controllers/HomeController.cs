@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,12 @@ namespace AmazoniamWillowHotel.Controllers
     {
         public ActionResult Index()
         {
+
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["Home"] = mo.Pagina.Where(x => x.nombre == "Home").Include(p => p.Info).Include(p => p.Info.Select(x => x.Imagen1)).ToList();
+                
+            }
             return View();
         }
 
@@ -17,11 +24,11 @@ namespace AmazoniamWillowHotel.Controllers
         {
             ViewBag.Message = "Informate más de las atracciones que existen cerca del hotel";
 
-            return View();
-        }
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["SobreNosotros"] = mo.Pagina.Where(x => x.nombre == "Sobre Nosotros").Include(p => p.Info).Include(p => p.Info.Select(x => x.Imagen1)).ToList();
 
-        public ActionResult Login()
-        {
+            }
 
             return View();
         }
@@ -39,7 +46,7 @@ namespace AmazoniamWillowHotel.Controllers
         public ActionResult Facilities()
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities()) {
-                ViewData["Facilities"] = mo.Facilidad.ToList();
+                ViewData["Facilities"] = mo.Pagina.Where(x => x.nombre == "Facilidad");
             }
             return View();
         }

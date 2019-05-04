@@ -3,9 +3,43 @@
 @{
     ViewBag.Title = "Sobre nosotros";
 }
-@using (Html.BeginForm())
+
+@foreach (var item in (List<AmazoniamWillowHotel.Models.Pagina>)ViewData["SobreNosotros"])
 {
-<h2>@ViewBag.Title.</h2>
+
+    foreach (var info in (List<AmazoniamWillowHotel.Models.Info>)@item.Info.ToList())
+    {
+        if (info.descripcion != null)
+        {
+            <h2>@info.titulo</h2>
+
+            <div class="row">
+
+                <div class="col-sm-12">
+                    @{
+                        var parrrafos = info.descripcion.Split('^');
+                        foreach (String p in parrrafos)
+                        {
+                            <p>@p</p><br />
+                        }
+                    }
+                </div>
+            </div>
+            <br /><br />
+            <h2>Galería</h2>
+            <br />
+        }
+        else
+        {
+
+            var base64ImagenHotel = Convert.ToBase64String(info.Imagen1.imagen1);
+            string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
+            <div class="col-sm-4">
+                <img class="mostrarModal" width="100%" alt="Imagen" src="@imgSrcImagenHotel">
+            </div>
+        }
+    }
+}
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -22,87 +56,27 @@
     </div>
 </div>
 
-<div class="row">
-
-    <div class="col-sm-12">
-        <p>
-            El hotel cuenta con piscinas para niños y adultos,
-            además realizamos distintos tours a los distintos atractivos del lugar,
-            por otra parte puede asistir al gimnacio,
-            en el cual contamos con distintas máquinas de ejercicio
-            y entrenadores personales que lo ayudarán a durante su entrenamiento,
-            también tenemos un centro recreativo en el que puede realizar distintas actividades según sus gustos.
-        </p>
-    </div>
-
-    <div class="col-sm-12">
-
-        <br /><br />
-        <h2>Galería</h2>
-        <br />
-
-        <div class="row">
-
-            <div class="col-sm-4">
-                <img class="mostrarModal" width="100%" alt="Imagen" width="" src="~/Public/images/laguna.jpg">
-            </div>
-
-            <div class="col-sm-8">
-
-                <div class="row">
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/laguna1.jpg">
-                    </div>
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/reventazon.jpg">
-                    </div>
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/catarataoculta.jpg">
-                    </div>
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/bajoBonilla.jpg">
-                    </div>
-                </div>
-                <br />
-
-                <div class="row">
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/tucan.jpg">
-                    </div>
-                    <div class="col-xs-3">
-                        <img class="mostrarModal" width="100%" alt="Imagen" src="~/Public/images/represaReventazon.jpg">
-                    </div>
-                </div>
-                <br />
-
-            </div>
-        </div>
-    </div>
-
-</div>
-
 <script>
-$(document).ready(function(){
+    $(document).ready(function () {
 
 
 
-    $(".mostrarModal").click(function () {
-        var modal = $("#myModal");
+        $(".mostrarModal").click(function () {
+            var modal = $("#myModal");
 
-        var titulo = $(this).attr('alt');
-        var img = $(this).attr('src');
+            var titulo = $(this).attr('alt');
+            var img = $(this).attr('src');
 
-        modal.find('.modal-title').text(titulo);
-        modal.find('.modal-body').html('<img width="100%" src="' + img + '" />');
-        modal.modal();
+            modal.find('.modal-title').text(titulo);
+            modal.find('.modal-body').html('<img width="100%" src="' + img + '" />');
+            modal.modal();
+        });
+
+
+
     });
-
-
-
-});
 
 
 
 
 </script>
-}

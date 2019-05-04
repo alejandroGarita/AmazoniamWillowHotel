@@ -14,10 +14,16 @@ namespace AmazoniamWillowHotel.Models
     
     public partial class Pagina
     {
-        public int Id_Pagina { get; set; }
-        public string Nombre_Pagina { get; set; }
-        public string Titulo { get; set; }
-        public string Descripcion { get; set; }
-        public string Imagen { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pagina()
+        {
+            this.Info = new HashSet<Info>();
+        }
+    
+        public int id { get; set; }
+        public string nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Info> Info { get; set; }
     }
 }

@@ -14,8 +14,8 @@ namespace AmazoniamWillowHotel.Models
     
     public partial class Administrador
     {
-        public int Id_Administrador { get; set; }
-        public string Correo { get; set; }
-        public string Contrasena { get; set; }
+        public int id { get; set; }
+        public string correo { get; set; }
+        public string contrasenna { get; set; }
     }
 }

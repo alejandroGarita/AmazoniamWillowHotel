@@ -10,10 +10,14 @@
 namespace AmazoniamWillowHotel.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_getStatus_Result
+    public partial class Caracteristica
     {
-        public int Id_Estado { get; set; }
-        public string Nombre { get; set; }
+        public int id { get; set; }
+        public string descripcion { get; set; }
+        public int tipo { get; set; }
+    
+        public virtual Tipo_Habitacion Tipo_Habitacion { get; set; }
     }
 }
