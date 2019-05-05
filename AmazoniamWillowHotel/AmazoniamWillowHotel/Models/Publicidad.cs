@@ -14,11 +14,12 @@ namespace AmazoniamWillowHotel.Models
     
     public partial class Publicidad
     {
-        public int Id_Publicidad { get; set; }
-        public string URL_Publicidad { get; set; }
-        public string Imagen { get; set; }
-        public int Id_Estado { get; set; }
+        public int id { get; set; }
+        public string url { get; set; }
+        public int imagen { get; set; }
+        public int estado { get; set; }
     
-        public virtual Estado Estado { get; set; }
+        public virtual Estado Estado1 { get; set; }
+        public virtual Imagen Imagen1 { get; set; }
     }
 }

@@ -24,29 +24,32 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult ReservationClient(int numero, String titulo, String descripcion, double tarifa, String imagen, String fechaLlegada, String fechaSalida)
         {
-            Models.CheckAvailability_Result checkAvailability = new Models.CheckAvailability_Result();
+            //Models.CheckAvailability_Result checkAvailability = new Models.CheckAvailability_Result();
 
-            checkAvailability.numero = numero;
-            checkAvailability.titulo = titulo;
-            checkAvailability.descripcion = descripcion;
-            checkAvailability.tarifa = tarifa;
-            checkAvailability.imagen = imagen;
-            ViewData["fechaLlegada"] = fechaLlegada;
-            ViewData["fechaSalida"] = fechaSalida;
-            return View(checkAvailability);
+            //checkAvailability.numero = numero;
+            //checkAvailability.titulo = titulo;
+            //checkAvailability.descripcion = descripcion;
+            //checkAvailability.tarifa = tarifa;
+            //checkAvailability.imagen = imagen;
+            //ViewData["fechaLlegada"] = fechaLlegada;
+            //ViewData["fechaSalida"] = fechaSalida;
+
+            //return View(checkAvailability);
+            return View();
         }//ReservationClient
 
         public ActionResult ReservationInformation(String nombreCompleto, String correo_, int numeroReserva)
         {
-            Models.MakeReservation_Result makeReservation = new Models.MakeReservation_Result();
+            //Models.MakeReservation_Result makeReservation = new Models.MakeReservation_Result();
 
-            makeReservation.nombre = nombreCompleto;
-            makeReservation.correo = correo_;
-            makeReservation.numeroReserva = numeroReserva;
+            //makeReservation.nombre = nombreCompleto;
+            //makeReservation.correo = correo_;
+            //makeReservation.numeroReserva = numeroReserva;
 
-            correo(nombreCompleto, correo_, numeroReserva);
+            //correo(nombreCompleto, correo_, numeroReserva);
 
-            return View(makeReservation);
+            //return View(makeReservation);
+            return View();
         }//ReservationInformation
 
         public ActionResult RoomNotAvailable()
@@ -58,16 +61,17 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-                DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
-                DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
-                ObjectResult<Models.CheckAvailability_Result> result = mo.CheckAvailability(TipoHabitacion, fechaLlegada1, fechaSalida1);
+                //DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
+                //DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
+                //ObjectResult<Models.CheckAvailability_Result> result = mo.CheckAvailability(TipoHabitacion, fechaLlegada1, fechaSalida1);
 
-                Models.CheckAvailability_Result checkAvailability1 = new Models.CheckAvailability_Result();
-                foreach (Models.CheckAvailability_Result checkAvailability in result)
-                    checkAvailability1 = checkAvailability;
+                //Models.CheckAvailability_Result checkAvailability1 = new Models.CheckAvailability_Result();
+                //foreach (Models.CheckAvailability_Result checkAvailability in result)
+                //    checkAvailability1 = checkAvailability;
 
-                Thread.Sleep(3000);
-                return Json(checkAvailability1, JsonRequestBehavior.AllowGet);
+                //Thread.Sleep(3000);
+                //return Json(checkAvailability1, JsonRequestBehavior.AllowGet);
+                return Json("Return", JsonRequestBehavior.AllowGet);
             }
         }//checkAvailability
 
@@ -75,16 +79,17 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-                DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
-                DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
-                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1);
+                //DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
+                //DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
+                //ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1);
 
-                Models.MakeReservation_Result makeReservation1 = new Models.MakeReservation_Result();
-                foreach (Models.MakeReservation_Result makeReservation in result)
-                    makeReservation1 = makeReservation;
+                //Models.MakeReservation_Result makeReservation1 = new Models.MakeReservation_Result();
+                //foreach (Models.MakeReservation_Result makeReservation in result)
+                //    makeReservation1 = makeReservation;
 
-                Thread.Sleep(3000);
-                return Json(makeReservation1, JsonRequestBehavior.AllowGet);
+                //Thread.Sleep(3000);
+                //return Json(makeReservation1, JsonRequestBehavior.AllowGet);
+                return Json("Return", JsonRequestBehavior.AllowGet);
             }
         }//makeReservation
 
@@ -92,7 +97,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-                mo.FreeRoom(numero);
+                //mo.FreeRoom(numero);
                 
                 return Json("Cancelado", JsonRequestBehavior.AllowGet);
             }
@@ -123,5 +128,5 @@ namespace AmazoniamWillowHotel.Controllers
                 email.Dispose();
             }
         }//correo
-    }
-}
+    }//class
+}//namespace

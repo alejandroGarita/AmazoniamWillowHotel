@@ -12,25 +12,28 @@ namespace AmazoniamWillowHotel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tipo_Habitacion
+    public partial class Imagen
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tipo_Habitacion()
+        public Imagen()
         {
-            this.Caracteristica = new HashSet<Caracteristica>();
-            this.Habitacion = new HashSet<Habitacion>();
+            this.Info = new HashSet<Info>();
+            this.Promocion = new HashSet<Promocion>();
+            this.Publicidad = new HashSet<Publicidad>();
+            this.Tipo_Habitacion = new HashSet<Tipo_Habitacion>();
         }
     
-        public int id { get; set; }
-        public string titulo { get; set; }
-        public double tarifa { get; set; }
-        public string descripcion { get; set; }
-        public int imagen { get; set; }
+        public int id_Imagen { get; set; }
+        public System.Guid id_Imagen_FileStream { get; set; }
+        public byte[] imagen1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Caracteristica> Caracteristica { get; set; }
+        public virtual ICollection<Info> Info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Habitacion> Habitacion { get; set; }
-        public virtual Imagen Imagen1 { get; set; }
+        public virtual ICollection<Promocion> Promocion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Publicidad> Publicidad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tipo_Habitacion> Tipo_Habitacion { get; set; }
     }
 }

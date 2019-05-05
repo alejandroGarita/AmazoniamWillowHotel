@@ -2,30 +2,30 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
-    <div class="col-sm-4">
-        <img width="100%" src="~/Public/images/laguna.jpg">
-    </div>
+@foreach (var item in (List<AmazoniamWillowHotel.Models.Pagina>)ViewData["Home"])
+{
+    foreach (var info in (List<AmazoniamWillowHotel.Models.Info>)@item.Info.ToList())
+    {
+        var base64ImagenHotel = Convert.ToBase64String(info.Imagen1.imagen1);
+        string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
 
-    <div class="col-sm-8">
-        <h4>Bienvenidos al Hotel Amazonian Willow</h4>
-        <br />
-        <p>
-            Aquí podrá disfrutar de una estadía agradable, con una vista espectacular y contará con la mejor atención de la zona.
-        </p>
-        <br />
-        <p>
-            En este lugar puede olvidarse de sus preocupaciones y sentarse a disfrutar de la vista y de las distintas actividades de recreación que ponemos a su disposición.
-        </p>
-        <br />
-        <p>
-            Tenemos precios accesibles para todas las personas, para que nadie se quede sin disfrutar de esta inolvidable experiencia.
-        </p>
-        <br />
-        <p>
-            ¿Qué espera?
-            Reserve una habitación hoy mismo.
-            ¡No se quede sin su oportunidad de disfrutar de esta experiencia!.
-        </p>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-sm-4">
+                <img width="100%" src="@imgSrcImagenHotel">
+            </div>
+
+            <div class="col-sm-8">
+
+                <h3>@info.titulo</h3><br />
+
+                @{
+                    var parrrafos = info.descripcion.Split('^');
+                    foreach (String p in parrrafos) {
+                        <p>@p</p><br />           
+                    }
+                }
+
+            </div>
+        </div>
+    }
+}
