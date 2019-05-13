@@ -10,17 +10,11 @@
 namespace AmazoniamWillowHotel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Promocion
+    public partial class MakeReservation_Result
     {
-        public int id { get; set; }
-        public string descripcion { get; set; }
-        public Nullable<int> descuento { get; set; }
-        public Nullable<System.DateTime> inicio { get; set; }
-        public Nullable<System.DateTime> fin { get; set; }
-        public int tipoHabitacion { get; set; }
-    
-        public virtual Tipo_Habitacion Tipo_Habitacion { get; set; }
+        public string nombre { get; set; }
+        public Nullable<int> numeroReserva { get; set; }
+        public string correo { get; set; }
     }
 }

@@ -84,10 +84,10 @@ CREATE TABLE Publicidad(
 CREATE TABLE Promocion(
 	id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	descripcion varchar (100) Not Null,
-	descuento FLOAT,
+	descuento int,
 	inicio DATE,
 	fin DATE,
-	imagen INT NOT NULL FOREIGN KEY REFERENCES Imagen(id_Imagen)
+	tipoHabitacion INT NOT NULL FOREIGN KEY REFERENCES Tipo_Habitacion(id)
 );
 
 CREATE TABLE Pagina(
@@ -111,64 +111,31 @@ CREATE TABLE Administrador(
 );
 
 --------------------------------------------------------
+
 CREATE PROCEDURE sp_checkAvailability @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
 AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY
-		Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float, @imagen varchar(1500)
-			If exists(SELECT Habitacion.Numero FROM Habitacion WHERE Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1)
-			BEGIN
-				SELECT TOP 1 @numero = Habitacion.Numero, @titulo = Tipo_Habitacion.Titulo, @descripcion = Tipo_Habitacion.Descripcion, @tarifa = Tipo_Habitacion.Tarifa, @imagen = Tipo_Habitacion.Imagen
-				FROM Habitacion, Tipo_Habitacion
-				WHERE Habitacion.Id_Tipo_Habitacion = Tipo_Habitacion.Id_Tipo_Habitacion AND Tipo_Habitacion.Id_Tipo_Habitacion = @idTipoHabitacion AND Habitacion.Id_Estado = 1;
-
-				Update Habitacion Set Habitacion.Id_Estado = 10 Where Habitacion.Numero = @numero;
-
-				SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
-			END
-			Else
-			Begin
-				Set @numero = 0;
-				Set @titulo = '';
-				Set @descripcion = 'No hay Habitaciones';
-				Set @tarifa = 0;
-				Set @imagen = '';
-				SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
-			End
-	COMMIT TRANSACTION;
-	RETURN (1);
-	END TRY  
-	BEGIN CATCH  
-		ROLLBACK		
-		SELECT   
-        ERROR_NUMBER() AS ErrorNumber, ERROR_SEVERITY() AS ErrorSeverity,
-        ERROR_STATE() AS ErrorState, ERROR_PROCEDURE() AS ErrorProcedure,  
-        ERROR_LINE() AS ErrorLine, ERROR_MESSAGE() AS ErrorMessage;  
-		RETURN(-1)
-	END CATCH;
-END
-GO
-
-Exec sp_checkAvailability 1, '2019-05-02', '2019-05-02';
-
-CREATE PROCEDURE sp_ConsultarDisponibilidad @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
-AS BEGIN
-	BEGIN TRANSACTION
-	BEGIN TRY
-	Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float
+	Declare @numero int, @titulo varchar(100), @descripcion varchar(max), @tarifa float, @imagen int
 		If exists(SELECT Habitacion.numero FROM Habitacion WHERE Habitacion.tipo = @idTipoHabitacion AND Habitacion.estado = 1)
 		BEGIN
-			SELECT TOP 1 @numero = Habitacion.numero, @titulo = Tipo_Habitacion.titulo, @descripcion = Tipo_Habitacion.descripcion, @tarifa = Tipo_Habitacion.tarifa
-			FROM Habitacion, Tipo_Habitacion
-			WHERE Habitacion.tipo = Tipo_Habitacion.id AND Tipo_Habitacion.id = @idTipoHabitacion AND Habitacion.estado = 1;
+			SELECT TOP 1 @numero = h.numero, @titulo = th.titulo, @descripcion = th.descripcion, @tarifa = th.tarifa, @imagen = i.id_Imagen
+			FROM Habitacion h
+			Join Tipo_Habitacion th on h.tipo = th.id Join Imagen i on th.imagen = i.id_Imagen
+			WHERE th.id = 4 AND h.estado = 1;
 
 			Update Habitacion Set Habitacion.estado = 10 Where Habitacion.numero = @numero;
 
-			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa;
+			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
 		END
 		Else
 		Begin
-			Select 'No hay Habitaciones' as respuesta;
+			Set @numero = 0;
+			Set @titulo = '';
+			Set @descripcion = 'No hay Habitaciones';
+			Set @tarifa = 0;
+			Set @imagen = 0;
+			SELECT @numero as numero, @titulo as titulo, @descripcion as descripcion, @tarifa as tarifa, @imagen as imagen;
 		End
 	COMMIT TRANSACTION;
 	RETURN (1);
@@ -191,18 +158,15 @@ AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY  
 	Declare @numeroReserva int, @idHabitacion int
-	IF NOT EXISTS (SELECT * FROM Cliente WHERE Correo = @correo) BEGIN
-		INSERT INTO Cliente VALUES (@identificacion, @nombre, @apellidos, @tarjeta, @correo)
-	END	
 
-	Select @idHabitacion = id_Habitacion from Habitacion where Numero = @numero;
+	Select @idHabitacion = id from Habitacion where Numero = @numero;
 
-	INSERT INTO Reserva (Id_Habitacion, Identificacion_Cliente, Fecha_Ingreso, Fecha_Salida, Id_Estado)
-	VALUES(@idHabitacion, @identificacion, @fechaLlegada, @fechaSalida, 9);	
+	INSERT INTO Reservacion (identificacion, nombre, apellidos, correo, tarjeta, fechaInicio, fechaFin, habitacion, estado)
+	VALUES(@identificacion, @nombre, @apellidos, @correo, @tarjeta, @fechaLlegada, @fechaSalida, @numero, 9);	
 	
-	Select @numeroReserva = id_Reserva From Reserva where @idHabitacion = Id_Habitacion AND @identificacion = Identificacion_Cliente AND @fechaLlegada = Fecha_Ingreso AND @fechaSalida = Fecha_Salida;
+	Select @numeroReserva = id From Reservacion where habitacion = @numero AND identificacion = @identificacion AND fechaInicio = @fechaLlegada AND fechaFin = @fechaSalida;
 
-	Update Habitacion Set Habitacion.Id_Estado = 9 where Habitacion.Numero = @numero;
+	Update Habitacion Set Habitacion.estado = 9 where Habitacion.id = @numero;
 
 	SELECT @nombre + ' ' + @apellidos as nombre, @numeroReserva as numeroReserva, @correo as correo;
 
@@ -228,7 +192,7 @@ AS BEGIN
 	BEGIN TRANSACTION
 	BEGIN TRY  
 	
-	Update Habitacion Set Habitacion.Id_Estado = 1 where Habitacion.Numero = @numero;
+	Update Habitacion Set Habitacion.estado = 1 where Habitacion.Numero = @numero;
 
 	COMMIT TRANSACTION;
 	RETURN (1);
