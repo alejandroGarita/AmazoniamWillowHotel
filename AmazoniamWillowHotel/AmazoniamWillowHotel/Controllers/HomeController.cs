@@ -62,6 +62,10 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult HowToGet()
         {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["¿Como Llegar?"] = mo.Pagina.Where(x => x.nombre == "¿Como Llegar?").Include(p => p.Info).ToList();
+            }
             return View();
         }
 

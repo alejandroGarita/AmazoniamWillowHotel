@@ -1,7 +1,6 @@
 ﻿@model AmazoniamWillowHotel.Models.CheckAvailability_Result
 @{
     ViewBag.Title = "Información del cliente";
-    string imagen = Model.imagen;
     string descripcion = Model.descripcion;
     int? numero = Model.numero;
 }
@@ -29,9 +28,15 @@
     <input type="hidden" id="fechaSalida" name="fechaSalida" class="form-control" value="@ViewData["fechaSalida"]" />
     <input type="hidden" id="numero" name="numero" class="form-control" value="@numero" />
     <div class="row">
-        <div class="col-sm-3">
-            <img width="100%" src="~/Public/images/@imagen">
-        </div>
+        @foreach (var item in (List<AmazoniamWillowHotel.Models.Imagen>)ViewData["imagen"])
+        {
+            var base64ImagenHotel = Convert.ToBase64String(item.imagen1);
+            string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
+            
+            <div class="col-sm-3">
+                <img width="100%" src="@imgSrcImagenHotel">
+            </div>
+        }
         <div class="col-sm-9">
             <p>@descripcion</p>
         </div>
@@ -67,6 +72,11 @@
 
 <script>
     $("#Aceptar").click("click", function () {
+        document.getElementById("spanTarjeta").innerHTML = "";
+        document.getElementById("spanCorreo").innerHTML = "";
+        document.getElementById("spanNombre").innerHTML = "";
+        document.getElementById("spanIdentificacion").innerHTML = "";
+
         var identificacion = $("#identificacion").val();
         var nombre = $("#nombre").val();
         var apellidos = $("#apellidos").val();
@@ -75,6 +85,7 @@
         var numero = $("#numero").val();
         var fechaLlegada = $("#fechaLlegada").val();
         var fechaSalida = $("#fechaSalida").val();
+
         if (identificacion != "") {
             if (nombre != "" && apellidos != "") {
                 if (correo != "") {

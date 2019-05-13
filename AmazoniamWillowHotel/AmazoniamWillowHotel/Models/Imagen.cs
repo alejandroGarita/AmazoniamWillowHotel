@@ -18,7 +18,6 @@ namespace AmazoniamWillowHotel.Models
         public Imagen()
         {
             this.Info = new HashSet<Info>();
-            this.Promocion = new HashSet<Promocion>();
             this.Publicidad = new HashSet<Publicidad>();
             this.Tipo_Habitacion = new HashSet<Tipo_Habitacion>();
         }
@@ -29,8 +28,6 @@ namespace AmazoniamWillowHotel.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Info> Info { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promocion> Promocion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Publicidad> Publicidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
