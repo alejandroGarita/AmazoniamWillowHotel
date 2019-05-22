@@ -45,7 +45,7 @@ namespace AmazoniamWillowHotel.Controllers
         public ActionResult Facilities()
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities()) {
-                ViewData["Facilities"] = mo.Pagina.Where(x => x.nombre == "Facilidad");
+                ViewData["Facilities"] = mo.Pagina.Where(x => x.nombre == "Facilidades").Include(p => p.Info).Include(p => p.Info.Select(x => x.Imagen1)).ToList();
             }
             return View();
         }
