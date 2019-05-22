@@ -157,6 +157,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdvertisingController.cs" />
+    <Compile Include="Controllers\FacilitieController.cs" />
     <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -350,6 +351,9 @@
     <Content Include="Views\Shared\_Advertising.cshtml" />
     <Content Include="Views\Shared\_Promotions.cshtml" />
     <Content Include="Views\Promotion\ShowPromotion.cshtml" />
+    <Content Include="Views\Facilitie\Facilities.cshtml" />
+    <Content Include="Views\Admin\InsertFacilitie.cshtml" />
+    <Content Include="Views\Admin\seeAvailableDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
