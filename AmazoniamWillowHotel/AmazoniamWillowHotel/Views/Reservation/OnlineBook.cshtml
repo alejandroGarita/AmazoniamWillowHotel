@@ -27,7 +27,7 @@
                 <select name="TipoHabitacion" id="TipoHabitacion" class="form-control">
                     @foreach (var item in (List<AmazoniamWillowHotel.Models.Tipo_Habitacion>)ViewData["types"])
                     {
-                        <option value="@item.Id_Tipo_Habitacion">@item.Titulo</option>
+                        <option value="@item.id">@item.titulo</option>
                     }
                 </select>
             </div>
@@ -88,7 +88,7 @@
         var fechaLlegada = $("#fechaLlegada").val();
         var fechaSalida = $("#fechaSalida").val();
         var tipoHabitacion = $("#TipoHabitacion").val();
-        if (fechaLlegada != "" && fechaSalida != "") {
+        if (fechaLlegada != "dd/mm/aaaa" && fechaSalida != "dd/mm/aaaa") {
             var md = $("#processing-modal");
             md.modal('show');
 

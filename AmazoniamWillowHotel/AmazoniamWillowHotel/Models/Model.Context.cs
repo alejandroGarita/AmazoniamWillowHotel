@@ -39,7 +39,7 @@ namespace AmazoniamWillowHotel.Models
         public virtual DbSet<Reservacion> Reservacion { get; set; }
         public virtual DbSet<Tipo_Habitacion> Tipo_Habitacion { get; set; }
     
-        public virtual ObjectResult<sp_ConsultarDisponibilidad_Result> sp_ConsultarDisponibilidad(Nullable<int> idTipoHabitacion, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        public virtual ObjectResult<sp_checkAvailability_Result> sp_checkAvailability(Nullable<int> idTipoHabitacion, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
             var idTipoHabitacionParameter = idTipoHabitacion.HasValue ?
                 new ObjectParameter("idTipoHabitacion", idTipoHabitacion) :
@@ -53,7 +53,16 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("fechaFin", fechaFin) :
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultarDisponibilidad_Result>("sp_ConsultarDisponibilidad", idTipoHabitacionParameter, fechaInicioParameter, fechaFinParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_checkAvailability_Result>("sp_checkAvailability", idTipoHabitacionParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<sp_freeRoom_Result> sp_freeRoom(Nullable<int> numero)
+        {
+            var numeroParameter = numero.HasValue ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_freeRoom_Result>("sp_freeRoom", numeroParameter);
         }
     
         public virtual int sp_InsertarImagen(byte[] imagen)
@@ -63,6 +72,106 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("imagen", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertarImagen", imagenParameter);
+        }
+    
+        public virtual ObjectResult<sp_makeReservation_Result> sp_makeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida)
+        {
+            var identificacionParameter = identificacion != null ?
+                new ObjectParameter("identificacion", identificacion) :
+                new ObjectParameter("identificacion", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("apellidos", apellidos) :
+                new ObjectParameter("apellidos", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var tarjetaParameter = tarjeta != null ?
+                new ObjectParameter("tarjeta", tarjeta) :
+                new ObjectParameter("tarjeta", typeof(string));
+    
+            var numeroParameter = numero.HasValue ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(int));
+    
+            var fechaLlegadaParameter = fechaLlegada.HasValue ?
+                new ObjectParameter("fechaLlegada", fechaLlegada) :
+                new ObjectParameter("fechaLlegada", typeof(System.DateTime));
+    
+            var fechaSalidaParameter = fechaSalida.HasValue ?
+                new ObjectParameter("fechaSalida", fechaSalida) :
+                new ObjectParameter("fechaSalida", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_makeReservation_Result>("sp_makeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter);
+        }
+    
+        public virtual ObjectResult<MakeReservation_Result> MakeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida)
+        {
+            var identificacionParameter = identificacion != null ?
+                new ObjectParameter("identificacion", identificacion) :
+                new ObjectParameter("identificacion", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("apellidos", apellidos) :
+                new ObjectParameter("apellidos", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var tarjetaParameter = tarjeta != null ?
+                new ObjectParameter("tarjeta", tarjeta) :
+                new ObjectParameter("tarjeta", typeof(string));
+    
+            var numeroParameter = numero.HasValue ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(int));
+    
+            var fechaLlegadaParameter = fechaLlegada.HasValue ?
+                new ObjectParameter("fechaLlegada", fechaLlegada) :
+                new ObjectParameter("fechaLlegada", typeof(System.DateTime));
+    
+            var fechaSalidaParameter = fechaSalida.HasValue ?
+                new ObjectParameter("fechaSalida", fechaSalida) :
+                new ObjectParameter("fechaSalida", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MakeReservation_Result>("MakeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter);
+        }
+    
+        public virtual int FreeRoom(Nullable<int> numero)
+        {
+            var numeroParameter = numero.HasValue ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FreeRoom", numeroParameter);
+        }
+    
+        public virtual ObjectResult<CheckAvailability_Result> CheckAvailability(Nullable<int> idTipoHabitacion, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var idTipoHabitacionParameter = idTipoHabitacion.HasValue ?
+                new ObjectParameter("idTipoHabitacion", idTipoHabitacion) :
+                new ObjectParameter("idTipoHabitacion", typeof(int));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("fechaInicio", fechaInicio) :
+                new ObjectParameter("fechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("fechaFin", fechaFin) :
+                new ObjectParameter("fechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckAvailability_Result>("CheckAvailability", idTipoHabitacionParameter, fechaInicioParameter, fechaFinParameter);
         }
     }
 }
