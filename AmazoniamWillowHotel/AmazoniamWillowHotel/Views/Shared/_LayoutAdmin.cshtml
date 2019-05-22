@@ -36,14 +36,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="logo-left">
                         <a href="~/Admin/Index"><img style="max-width: 100%;" src="~/Public/images/logo.png"></a>
                     </div>
-
+                    <div class="salir">
+                        @if (Session["username"] != null)
+                        {
+                            <a href="~/Admin/Exit"><i class="menu"></i>Cerrar sesión</a>
+                        }
+                    </div>
                     <div class="nombre">
                         <h2>Hotel Amazonian Willow Administration</h2>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
                 <hr>
-                <div class="col-xs-3 banner-body-left">
+                <div class="col-xs-4 banner-body-left">
                     <div class="top-nav">
                         <nav class="navbar navbar-default">
                             <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,14 +66,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <nav class="stroke">
                                     <ul class="nav navbar-nav">
 
-                                        @if (Session["username"] == null)
+                                        @if (Session["username"] != null)
                                         {
-                                            <li><a href="~/Admin/Login" class="hvr-underline-from-left"><i class="menu"></i>Login</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li><a href="~/Admin/Index" class="hvr-underline-from-left"><i class="menu"></i>Inicio</a></li>
-                                            <li><a href="~/Admin/Exit" class="hvr-underline-from-left"><i class="menu"></i>Cerrar sesión</a></li>
+                                            <li><a href="~/Admin/Index" class="hvr-underline-from-left"><i class="menu"></i>Home</a></li>
+                                            <li><a href="~/Admin/ModifyPages" class="hvr-underline-from-left"><i class="menu"></i>Modificar Páginas</a></li>
+                                            <li><a href="~/Admin/ListReservations" class="hvr-underline-from-left"><i class="menu"></i>Listado de reservaciones</a></li>
+                                            <li><a href="~/Admin/ManageRooms" class="hvr-underline-from-left"><i class="menu"></i>Administrar habitaciones</a></li>
+                                            <li><a href="~/Admin/HotelStatus" class="hvr-underline-from-left"><i class="menu"></i>Ver estado del hotel hoy</a></li>
+                                            <li><a href="~/Admin/CheckAvailability" class="hvr-underline-from-left"><i class="menu"></i>Consultar disponibilidad</a></li>
+                                            <li><a href="~/Admin/Advertising" class="hvr-underline-from-left"><i class="menu"></i>Publicidad</a></li>
                                         }
 
                                     </ul>
@@ -78,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </nav>
                     </div>
                 </div>
-                <div class="container body-content col-xs-9">
+                <div class="container body-content col-xs-8">
                     @RenderBody()
                 </div>
                 <div class="clearfix"> </div>
