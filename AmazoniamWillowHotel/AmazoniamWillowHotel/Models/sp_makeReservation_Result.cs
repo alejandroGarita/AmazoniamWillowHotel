@@ -16,5 +16,6 @@ namespace AmazoniamWillowHotel.Models
         public string nombre { get; set; }
         public Nullable<int> numeroReserva { get; set; }
         public string correo { get; set; }
+        public Nullable<double> monto { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="id" />
@@ -94,6 +94,7 @@
           <Property Name="tarjeta" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="fechaInicio" Type="date" Nullable="false" />
           <Property Name="fechaFin" Type="date" Nullable="false" />
+          <Property Name="monto" Type="float" Nullable="false" />
           <Property Name="habitacion" Type="int" Nullable="false" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
@@ -203,7 +204,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservaci__estad__08B54D69">
+        <Association Name="FK__Reservaci__estad__1EA48E88">
           <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
           <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -215,7 +216,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservaci__habit__07C12930">
+        <Association Name="FK__Reservaci__habit__1DB06A4F">
           <End Role="Habitacion" Type="Self.Habitacion" Multiplicity="1" />
           <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,6 +261,7 @@
           <Parameter Name="numero" Type="int" Mode="In" />
           <Parameter Name="fechaLlegada" Type="datetime" Mode="In" />
           <Parameter Name="fechaSalida" Type="datetime" Mode="In" />
+          <Parameter Name="monto" Type="float" Mode="In" />
         </Function>
         <Function Name="sp_RoomDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Hotel_Amazonian_WillowModelStoreContainer">
@@ -306,11 +308,11 @@
             <End Role="Imagen" EntitySet="Imagen" />
             <End Role="Publicidad" EntitySet="Publicidad" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservaci__estad__08B54D69" Association="Self.FK__Reservaci__estad__08B54D69">
+          <AssociationSet Name="FK__Reservaci__estad__1EA48E88" Association="Self.FK__Reservaci__estad__1EA48E88">
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservaci__habit__07C12930" Association="Self.FK__Reservaci__habit__07C12930">
+          <AssociationSet Name="FK__Reservaci__habit__1DB06A4F" Association="Self.FK__Reservaci__habit__1DB06A4F">
             <End Role="Habitacion" EntitySet="Habitacion" />
             <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
@@ -319,7 +321,8 @@
             <End Role="Tipo_Habitacion" EntitySet="Tipo_Habitacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Hotel_Amazonian_WillowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -348,7 +351,7 @@
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Habitacion" Relationship="Self.FK__Habitacio__estad__7A672E12" FromRole="Estado" ToRole="Habitacion" />
           <NavigationProperty Name="Publicidad" Relationship="Self.FK__Publicida__estad__6383C8BA" FromRole="Estado" ToRole="Publicidad" />
-          <NavigationProperty Name="Reservacion" Relationship="Self.FK__Reservaci__estad__08B54D69" FromRole="Estado" ToRole="Reservacion" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.FK__Reservaci__estad__1EA48E88" FromRole="Estado" ToRole="Reservacion" />
         </EntityType>
         <EntityType Name="Habitacion">
           <Key>
@@ -360,7 +363,7 @@
           <Property Name="tipo" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado1" Relationship="Self.FK__Habitacio__estad__7A672E12" FromRole="Habitacion" ToRole="Estado" />
           <NavigationProperty Name="Tipo_Habitacion" Relationship="Self.FK__Habitacion__tipo__7B5B524B" FromRole="Habitacion" ToRole="Tipo_Habitacion" />
-          <NavigationProperty Name="Reservacion" Relationship="Self.FK__Reservaci__habit__07C12930" FromRole="Habitacion" ToRole="Reservacion" />
+          <NavigationProperty Name="Reservacion" Relationship="Self.FK__Reservaci__habit__1DB06A4F" FromRole="Habitacion" ToRole="Reservacion" />
         </EntityType>
         <EntityType Name="Imagen">
           <Key>
@@ -428,10 +431,11 @@
           <Property Name="tarjeta" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="fechaFin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="monto" Type="Double" Nullable="false" />
           <Property Name="habitacion" Type="Int32" Nullable="false" />
           <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Estado1" Relationship="Self.FK__Reservaci__estad__08B54D69" FromRole="Reservacion" ToRole="Estado" />
-          <NavigationProperty Name="Habitacion1" Relationship="Self.FK__Reservaci__habit__07C12930" FromRole="Reservacion" ToRole="Habitacion" />
+          <NavigationProperty Name="Estado1" Relationship="Self.FK__Reservaci__estad__1EA48E88" FromRole="Reservacion" ToRole="Estado" />
+          <NavigationProperty Name="Habitacion1" Relationship="Self.FK__Reservaci__habit__1DB06A4F" FromRole="Reservacion" ToRole="Habitacion" />
         </EntityType>
         <EntityType Name="Tipo_Habitacion">
           <Key>
@@ -483,7 +487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservaci__estad__08B54D69">
+        <Association Name="FK__Reservaci__estad__1EA48E88">
           <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
           <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -507,7 +511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reservaci__habit__07C12930">
+        <Association Name="FK__Reservaci__habit__1DB06A4F">
           <End Role="Habitacion" Type="Self.Habitacion" Multiplicity="1" />
           <End Role="Reservacion" Type="Self.Reservacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -603,7 +607,7 @@
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Publicidad" EntitySet="Publicidad" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservaci__estad__08B54D69" Association="Self.FK__Reservaci__estad__08B54D69">
+          <AssociationSet Name="FK__Reservaci__estad__1EA48E88" Association="Self.FK__Reservaci__estad__1EA48E88">
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
@@ -611,7 +615,7 @@
             <End Role="Tipo_Habitacion" EntitySet="Tipo_Habitacion" />
             <End Role="Habitacion" EntitySet="Habitacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reservaci__habit__07C12930" Association="Self.FK__Reservaci__habit__07C12930">
+          <AssociationSet Name="FK__Reservaci__habit__1DB06A4F" Association="Self.FK__Reservaci__habit__1DB06A4F">
             <End Role="Habitacion" EntitySet="Habitacion" />
             <End Role="Reservacion" EntitySet="Reservacion" />
           </AssociationSet>
@@ -635,16 +639,17 @@
             <End Role="Tipo_Habitacion" EntitySet="Tipo_Habitacion" />
             <End Role="Promocion" EntitySet="Promocion" />
           </AssociationSet>
+          <FunctionImport Name="sp_AvailabilityDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result)" />
           <FunctionImport Name="sp_checkAvailability" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_checkAvailability_Result)">
             <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_freeRoom" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_freeRoom_Result)">
-          <Parameter Name="numero" Mode="In" Type="Int32" />
+            <Parameter Name="numero" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_InsertarImagen">
-          <Parameter Name="imagen" Mode="In" Type="Binary" />
+            <Parameter Name="imagen" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_makeReservation" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_makeReservation_Result)">
             <Parameter Name="identificacion" Mode="In" Type="String" />
@@ -655,7 +660,9 @@
             <Parameter Name="numero" Mode="In" Type="Int32" />
             <Parameter Name="fechaLlegada" Mode="In" Type="DateTime" />
             <Parameter Name="fechaSalida" Mode="In" Type="DateTime" />
+            <Parameter Name="monto" Mode="In" Type="Double" />
           </FunctionImport>
+          <FunctionImport Name="sp_RoomDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_RoomDay_Result)" />
           <FunctionImport Name="MakeReservation" ReturnType="Collection(Hotel_Amazonian_WillowModel.MakeReservation_Result)">
             <Parameter Name="identificacion" Mode="In" Type="String" />
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -665,25 +672,33 @@
             <Parameter Name="numero" Mode="In" Type="Int32" />
             <Parameter Name="fechaLlegada" Mode="In" Type="DateTime" />
             <Parameter Name="fechaSalida" Mode="In" Type="DateTime" />
+            <Parameter Name="monto" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="FreeRoom">
-          <Parameter Name="numero" Mode="In" Type="Int32" />
+            <Parameter Name="numero" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="getRoomDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.getRoomDay_Result)" />
           <FunctionImport Name="CheckAvailability" ReturnType="Collection(Hotel_Amazonian_WillowModel.CheckAvailability_Result)">
             <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="sp_AvailabilityDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result)" />
-          <FunctionImport Name="getAvailabilityDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result)" />
-          <FunctionImport Name="getRoomDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.getRoomDay_Result)" />
         </EntityContainer>
+        <ComplexType Name="sp_AvailabilityDay_Result">
+          <Property Type="Int32" Name="idHabitacion" Nullable="false" />
+          <Property Type="Int32" Name="numero" Nullable="false" />
+          <Property Type="Int32" Name="estado" Nullable="false" />
+          <Property Type="Int32" Name="tipo" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="fechaInicio" Nullable="false" />
+          <Property Type="DateTime" Name="fechaFin" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="sp_checkAvailability_Result">
           <Property Type="Int32" Name="numero" Nullable="true" />
           <Property Type="String" Name="titulo" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="descripcion" Nullable="true" />
           <Property Type="Double" Name="tarifa" Nullable="true" />
-          <Property Type="Binary" Name="imagen" Nullable="true" />
+          <Property Type="Int32" Name="imagen" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_freeRoom_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -697,11 +712,25 @@
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="101" />
           <Property Type="Int32" Name="numeroReserva" Nullable="true" />
           <Property Type="String" Name="correo" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="monto" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RoomDay_Result">
+          <Property Type="Int32" Name="idHabitacion" Nullable="false" />
+          <Property Type="Int32" Name="numero" Nullable="false" />
+          <Property Type="Int32" Name="estado" Nullable="false" />
+          <Property Type="Int32" Name="tipo" Nullable="false" />
         </ComplexType>
         <ComplexType Name="MakeReservation_Result">
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="101" />
           <Property Type="Int32" Name="numeroReserva" Nullable="true" />
           <Property Type="String" Name="correo" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="monto" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getRoomDay_Result">
+          <Property Type="Int32" Name="idHabitacion" Nullable="false" />
+          <Property Type="Int32" Name="numero" Nullable="false" />
+          <Property Type="Int32" Name="estado" Nullable="false" />
+          <Property Type="Int32" Name="tipo" Nullable="false" />
         </ComplexType>
         <ComplexType Name="CheckAvailability_Result">
           <Property Type="Int32" Name="numero" Nullable="true" />
@@ -709,21 +738,6 @@
           <Property Type="String" Name="descripcion" Nullable="true" />
           <Property Type="Double" Name="tarifa" Nullable="true" />
           <Property Type="Int32" Name="imagen" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_AvailabilityDay_Result">
-          <Property Type="Int32" Name="idHabitacion" Nullable="false" />
-          <Property Type="Int32" Name="numero" Nullable="false" />
-          <Property Type="Int32" Name="estado" Nullable="false" />
-          <Property Type="Int32" Name="tipo" Nullable="false" />
-          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="fechaInicio" Nullable="false" />
-          <Property Type="DateTime" Name="fechaFin" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="getRoomDay_Result">
-          <Property Type="Int32" Name="idHabitacion" Nullable="false" />
-          <Property Type="Int32" Name="numero" Nullable="false" />
-          <Property Type="Int32" Name="estado" Nullable="false" />
-          <Property Type="Int32" Name="tipo" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -828,6 +842,7 @@
                 <ScalarProperty Name="tarjeta" ColumnName="tarjeta" />
                 <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
                 <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
                 <ScalarProperty Name="habitacion" ColumnName="habitacion" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
               </MappingFragment>
@@ -844,6 +859,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AvailabilityDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_AvailabilityDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result">
+                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_checkAvailability" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_checkAvailability">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_checkAvailability_Result">
@@ -874,6 +902,17 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="numeroReserva" ColumnName="numeroReserva" />
                 <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RoomDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_RoomDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_RoomDay_Result">
+                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -883,10 +922,21 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="numeroReserva" ColumnName="numeroReserva" />
                 <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FreeRoom" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_freeRoom" />
+          <FunctionImportMapping FunctionImportName="getRoomDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_RoomDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.getRoomDay_Result">
+                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CheckAvailability" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_checkAvailability">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.CheckAvailability_Result">
@@ -895,42 +945,6 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="tarifa" ColumnName="tarifa" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_AvailabilityDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_AvailabilityDay">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result">
-                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
-                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getAvailabilityDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_AvailabilityDay">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_AvailabilityDay_Result">
-                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
-                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getRoomDay" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_RoomDay">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.getRoomDay_Result">
-                <ScalarProperty Name="idHabitacion" ColumnName="idHabitacion" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -951,7 +965,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

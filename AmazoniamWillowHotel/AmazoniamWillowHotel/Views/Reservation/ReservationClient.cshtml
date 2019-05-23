@@ -32,7 +32,7 @@
         {
             var base64ImagenHotel = Convert.ToBase64String(item.imagen1);
             string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
-            
+
             <div class="col-sm-3">
                 <img width="100%" src="@imgSrcImagenHotel">
             </div>
@@ -43,7 +43,10 @@
     </div>
     <br />
     <br />
-    @Html.Label("Monto de su reservación: " + Model.tarifa)
+    @Html.Label("Precio de la habitación: " + Model.tarifa)
+    <br />
+    @Html.Label("Monto de la reservación: " + ViewData["Monto"])
+    <input type="hidden" id="monto" name="monto" class="form-control" value="@ViewData["Monto"]" />
     <br />
     <br />
     @Html.Label("Identificación:")
@@ -67,6 +70,7 @@
         <input type="hidden" id="nombreCompleto" name="nombreCompleto" class="form-control" />
         <input type="hidden" id="correo_" name="correo_" class="form-control" />
         <input type="hidden" id="numeroReserva" name="numeroReserva" class="form-control" />
+        <input type="hidden" id="montoR" name="montoR" class="form-control" />
     }
 </div>
 
@@ -83,6 +87,7 @@
         var correo = $("#correo").val();
         var tarjeta = $("#tarjeta").val();
         var numero = $("#numero").val();
+        var monto = $("#monto").val();
         var fechaLlegada = $("#fechaLlegada").val();
         var fechaSalida = $("#fechaSalida").val();
 
@@ -97,7 +102,7 @@
                             type: 'POST',
                             url: "/Reservation/makeReservation",
                             dataType: 'json',
-                            data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida },
+                            data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida, monto: monto },
 
                             success: function (makeReservation1) {
                                 if (makeReservation1 != "") {
@@ -105,6 +110,7 @@
                                     document.getElementById('nombreCompleto').value = makeReservation1.nombre;
                                     document.getElementById('correo_').value = makeReservation1.correo;
                                     document.getElementById('numeroReserva').value = makeReservation1.numeroReserva;
+                                    document.getElementById('montoR').value = makeReservation1.monto;
                                     $("#myForm").submit();
                                 }//if retorno algo
                             },
