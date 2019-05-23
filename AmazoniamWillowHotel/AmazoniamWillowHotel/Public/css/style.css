@@ -202,6 +202,10 @@ i.menu,.navbar-default .navbar-nav > li > a:hover i.menu{
     height: 175px;
     float: right;
 }
+.salir {
+    padding-top: 10em;
+    float: right;
+}
 .publicidad h2, .publicidad h3 {
     font-size: 1.5em;
     color: #0BB900;
