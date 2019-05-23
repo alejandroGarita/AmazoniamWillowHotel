@@ -39,6 +39,11 @@ namespace AmazoniamWillowHotel.Models
         public virtual DbSet<Reservacion> Reservacion { get; set; }
         public virtual DbSet<Tipo_Habitacion> Tipo_Habitacion { get; set; }
     
+        public virtual ObjectResult<sp_AvailabilityDay_Result> sp_AvailabilityDay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AvailabilityDay_Result>("sp_AvailabilityDay");
+        }
+    
         public virtual ObjectResult<sp_checkAvailability_Result> sp_checkAvailability(Nullable<int> idTipoHabitacion, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
             var idTipoHabitacionParameter = idTipoHabitacion.HasValue ?
@@ -74,7 +79,7 @@ namespace AmazoniamWillowHotel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertarImagen", imagenParameter);
         }
     
-        public virtual ObjectResult<sp_makeReservation_Result> sp_makeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida)
+        public virtual ObjectResult<sp_makeReservation_Result> sp_makeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida, Nullable<double> monto)
         {
             var identificacionParameter = identificacion != null ?
                 new ObjectParameter("identificacion", identificacion) :
@@ -108,10 +113,19 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("fechaSalida", fechaSalida) :
                 new ObjectParameter("fechaSalida", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_makeReservation_Result>("sp_makeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter);
+            var montoParameter = monto.HasValue ?
+                new ObjectParameter("monto", monto) :
+                new ObjectParameter("monto", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_makeReservation_Result>("sp_makeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter, montoParameter);
         }
     
-        public virtual ObjectResult<MakeReservation_Result> MakeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida)
+        public virtual ObjectResult<sp_RoomDay_Result> sp_RoomDay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_RoomDay_Result>("sp_RoomDay");
+        }
+    
+        public virtual ObjectResult<MakeReservation_Result> MakeReservation(string identificacion, string nombre, string apellidos, string correo, string tarjeta, Nullable<int> numero, Nullable<System.DateTime> fechaLlegada, Nullable<System.DateTime> fechaSalida, Nullable<double> monto)
         {
             var identificacionParameter = identificacion != null ?
                 new ObjectParameter("identificacion", identificacion) :
@@ -145,7 +159,11 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("fechaSalida", fechaSalida) :
                 new ObjectParameter("fechaSalida", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MakeReservation_Result>("MakeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter);
+            var montoParameter = monto.HasValue ?
+                new ObjectParameter("monto", monto) :
+                new ObjectParameter("monto", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MakeReservation_Result>("MakeReservation", identificacionParameter, nombreParameter, apellidosParameter, correoParameter, tarjetaParameter, numeroParameter, fechaLlegadaParameter, fechaSalidaParameter, montoParameter);
         }
     
         public virtual int FreeRoom(Nullable<int> numero)
@@ -155,6 +173,11 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("numero", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FreeRoom", numeroParameter);
+        }
+    
+        public virtual ObjectResult<getRoomDay_Result> getRoomDay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRoomDay_Result>("getRoomDay");
         }
     
         public virtual ObjectResult<CheckAvailability_Result> CheckAvailability(Nullable<int> idTipoHabitacion, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
@@ -172,21 +195,6 @@ namespace AmazoniamWillowHotel.Models
                 new ObjectParameter("fechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckAvailability_Result>("CheckAvailability", idTipoHabitacionParameter, fechaInicioParameter, fechaFinParameter);
-        }
-    
-        public virtual ObjectResult<sp_AvailabilityDay_Result> sp_AvailabilityDay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AvailabilityDay_Result>("sp_AvailabilityDay");
-        }
-    
-        public virtual ObjectResult<sp_AvailabilityDay_Result> getAvailabilityDay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_AvailabilityDay_Result>("getAvailabilityDay");
-        }
-    
-        public virtual ObjectResult<getRoomDay_Result> getRoomDay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRoomDay_Result>("getRoomDay");
         }
     }
 }

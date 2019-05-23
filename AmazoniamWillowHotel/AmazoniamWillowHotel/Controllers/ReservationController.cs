@@ -33,6 +33,8 @@ namespace AmazoniamWillowHotel.Controllers
             checkAvailability.imagen = imagen;
             ViewData["fechaLlegada"] = fechaLlegada;
             ViewData["fechaSalida"] = fechaSalida;
+            ViewData["Monto"] = tarifa * calcularDias(fechaLlegada, fechaSalida);
+
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
                 ViewData["imagen"] = mo.Imagen.Where(x => x.id_Imagen == imagen).ToList();
@@ -41,15 +43,16 @@ namespace AmazoniamWillowHotel.Controllers
             return View(checkAvailability);
         }//ReservationClient
 
-        public ActionResult ReservationInformation(String nombreCompleto, String correo_, int numeroReserva)
+        public ActionResult ReservationInformation(String nombreCompleto, String correo_, int numeroReserva, float montoR)
         {
             Models.MakeReservation_Result makeReservation = new Models.MakeReservation_Result();
 
             makeReservation.nombre = nombreCompleto;
             makeReservation.correo = correo_;
             makeReservation.numeroReserva = numeroReserva;
+            makeReservation.monto = montoR;
 
-            correo(nombreCompleto, correo_, numeroReserva);
+            correo(nombreCompleto, correo_, numeroReserva, montoR);
 
             return View(makeReservation);
         }//ReservationInformation
@@ -76,13 +79,13 @@ namespace AmazoniamWillowHotel.Controllers
             }
         }//checkAvailability
 
-        public JsonResult makeReservation(String identificacion, String nombre, String apellidos, String correo, String tarjeta, int numero, String fechaLlegada, String fechaSalida)
+        public JsonResult makeReservation(String identificacion, String nombre, String apellidos, String correo, String tarjeta, int numero, String fechaLlegada, String fechaSalida, float monto)
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
                 DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
                 DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
-                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1);
+                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1, monto);
 
                 Models.MakeReservation_Result makeReservation1 = new Models.MakeReservation_Result();
                 foreach (Models.MakeReservation_Result makeReservation in result)
@@ -103,13 +106,13 @@ namespace AmazoniamWillowHotel.Controllers
             }
         }//freeRoom
 
-        public void correo(String nombreCompleto, String correo_, int numeroReserva)
+        public void correo(String nombreCompleto, String correo_, int numeroReserva, float montoR)
         {
             MailMessage email = new MailMessage();
             email.To.Add(new MailAddress(correo_));
             email.From = new MailAddress("hotelamazonianwillow@gmail.com");
             email.Subject = "Reservación Comprobante ( " + DateTime.Now.ToString("dd/MM/yyy hh:mm:ss") + " ) ";
-            email.Body = "<p>Reservación realizada!</p><br/><p>Gracias "+nombreCompleto+"!! Su reservación fue realizada exitosamente.</p><br/><p>Número de reservación: "+numeroReserva+"</p><br/><p>Gracias por preferirnos!</p>";
+            email.Body = "<p>Reservación realizada!</p><br/><p>Gracias "+nombreCompleto+"!! Su reservación fue realizada exitosamente.</p><br/><p>Número de reservación: "+numeroReserva+ "</p><br/><p>Monto de la reservación: "+montoR+"</p><br/><p>Gracias por preferirnos!</p>";
             email.IsBodyHtml = true;
             email.Priority = MailPriority.Normal;
             SmtpClient smtp = new SmtpClient();
@@ -128,5 +131,17 @@ namespace AmazoniamWillowHotel.Controllers
                 email.Dispose();
             }
         }//correo
+
+        public int calcularDias(String fechaLlegada, String fechaSalida)
+        {
+            DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
+            DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
+
+            TimeSpan timeSpan = fechaSalida1 - fechaLlegada1;
+
+            return timeSpan.Days;
+
+        }//calcularDias
+
     }//class
 }//namespace

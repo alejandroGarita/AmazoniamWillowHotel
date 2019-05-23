@@ -69,7 +69,7 @@ CREATE TABLE Reservacion(
 	tarjeta VARCHAR(256) NOT NULL,
 	fechaInicio DATE NOT NULL,
 	fechaFin DATE NOT NULL,
-	--monto FLOAT NOT NULL,
+	monto FLOAT NOT NULL,
 	habitacion INT NOT NULL FOREIGN KEY REFERENCES Habitacion (id),
 	estado INT NOT NULL FOREIGN KEY REFERENCES Estado(id)
 );
@@ -112,6 +112,8 @@ CREATE TABLE Administrador(
 
 --------------------------------------------------------
 
+exec sp_checkAvailability 7, '2019-06-01', '2019-07-02'
+
 CREATE PROCEDURE sp_checkAvailability @idTipoHabitacion INT, @fechaInicio Date, @fechaFin Date
 AS BEGIN
 	BEGIN TRANSACTION
@@ -122,7 +124,7 @@ AS BEGIN
 			SELECT TOP 1 @numero = h.numero, @titulo = th.titulo, @descripcion = th.descripcion, @tarifa = th.tarifa, @imagen = i.id_Imagen
 			FROM Habitacion h
 			Join Tipo_Habitacion th on h.tipo = th.id Join Imagen i on th.imagen = i.id_Imagen
-			WHERE th.id = 4 AND h.estado = 1;
+			WHERE th.id = @idTipoHabitacion AND h.estado = 1;
 
 			Update Habitacion Set Habitacion.estado = 10 Where Habitacion.numero = @numero;
 
@@ -152,7 +154,7 @@ END
 GO
 
 CREATE PROCEDURE sp_makeReservation @identificacion VARCHAR(25), @nombre VARCHAR(50), @apellidos VARCHAR(50), @correo VARCHAR(50), 
-	@tarjeta VARCHAR(50), @numero INT, @fechaLlegada DATETIME, @fechaSalida DATETIME
+	@tarjeta VARCHAR(50), @numero INT, @fechaLlegada DATETIME, @fechaSalida DATETIME, @monto FLOAT
 									 
 AS BEGIN
 	BEGIN TRANSACTION
@@ -161,14 +163,14 @@ AS BEGIN
 
 	Select @idHabitacion = id from Habitacion where Numero = @numero;
 
-	INSERT INTO Reservacion (identificacion, nombre, apellidos, correo, tarjeta, fechaInicio, fechaFin, habitacion, estado)
-	VALUES(@identificacion, @nombre, @apellidos, @correo, @tarjeta, @fechaLlegada, @fechaSalida, @numero, 9);	
+	INSERT INTO Reservacion (identificacion, nombre, apellidos, correo, tarjeta, fechaInicio, fechaFin, monto, habitacion, estado)
+	VALUES(@identificacion, @nombre, @apellidos, @correo, @tarjeta, @fechaLlegada, @fechaSalida, @monto,@numero, 9);	
 	
 	Select @numeroReserva = id From Reservacion where habitacion = @numero AND identificacion = @identificacion AND fechaInicio = @fechaLlegada AND fechaFin = @fechaSalida;
 
 	Update Habitacion Set Habitacion.estado = 9 where Habitacion.id = @numero;
 
-	SELECT @nombre + ' ' + @apellidos as nombre, @numeroReserva as numeroReserva, @correo as correo;
+	SELECT @nombre + ' ' + @apellidos as nombre, @numeroReserva as numeroReserva, @correo as correo, @monto as monto;
 
 	COMMIT TRANSACTION;
 	RETURN (1);
