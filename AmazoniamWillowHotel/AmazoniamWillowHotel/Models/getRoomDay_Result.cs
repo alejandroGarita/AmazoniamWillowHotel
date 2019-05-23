@@ -11,12 +11,11 @@ namespace AmazoniamWillowHotel.Models
 {
     using System;
     
-    public partial class sp_checkAvailability_Result
+    public partial class getRoomDay_Result
     {
-        public Nullable<int> numero { get; set; }
-        public string titulo { get; set; }
-        public string descripcion { get; set; }
-        public Nullable<double> tarifa { get; set; }
-        public byte[] imagen { get; set; }
+        public int idHabitacion { get; set; }
+        public int numero { get; set; }
+        public int estado { get; set; }
+        public int tipo { get; set; }
     }
 }

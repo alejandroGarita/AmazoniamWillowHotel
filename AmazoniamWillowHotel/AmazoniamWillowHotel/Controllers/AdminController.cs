@@ -15,6 +15,8 @@ namespace AmazoniamWillowHotel.Controllers
             else return View("Index");
         }
 
+
+
         public ActionResult Index()
         {
             if (isNotLogin())
@@ -58,5 +60,31 @@ namespace AmazoniamWillowHotel.Controllers
             return true;
         }
 
+        public ActionResult InsertFacilitie()
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["Status"] = new SelectList(mo.Estado.ToList(), "Id_Estado", "Nombre");
+            }
+            //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
+            return View();
+        }
+
+        public ActionResult seeAvailableDay()
+        {
+          
+            //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
+            return View();
+        }
+
+        public JsonResult getAvailableDay()
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+
+            return Json(mo.getRoomDay(), JsonRequestBehavior.AllowGet);
+        }
+
     }
+
+
 }
