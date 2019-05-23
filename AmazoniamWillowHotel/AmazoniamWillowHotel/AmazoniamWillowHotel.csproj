@@ -176,6 +176,9 @@
     <Compile Include="Models\Estado.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getRoomDay_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Habitacion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -213,6 +216,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Reservacion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_AvailabilityDay_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_checkAvailability_Result.cs">

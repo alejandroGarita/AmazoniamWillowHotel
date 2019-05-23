@@ -1,7 +1,48 @@
 ﻿
 @{
-    ViewBag.Title = "Habitaciones día de hoy";
+    ViewBag.Title = "Habitaciones del día de hoy";
 }
 
-<h2>seeAvailableDay</h2>
+<h2>Disponibilidad de Hoy</h2>
+<table class="table table-striped w-auto">
+    <thead>
+        <tr>
+            <th scope="col">Habitación</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Estado</th>
+        </tr>
+    </thead>
+    <tbody id="body"></tbody>
+</table>
 
+<script>
+    $(document).ready(function () {
+        var bodyTable = "";
+        $.ajax({
+            type: 'POST',
+            url: "/Admin/getAvailableDay",
+            dataType: 'json',
+
+            success: function (roomDay) {
+                var data = JSON.stringify(roomDay);
+                alert(data);
+               
+                for (var i = 0; i < roomDay.length; i++) {
+                    bodyTable += "<tr><th scope='row'>" + roomDay[i].numero + "</th>";
+                    bodyTable += "<td>" + roomDay[i].tipo + "</td>";
+                    bodyTable += "<td>" + roomDay[i].estado + "</td></tr>";
+                }
+                $("#body").html(bodyTable);
+            },
+            error: function (ex) {
+               // md.modal('hide');
+                alert('Fallo al procesar la reservación.' + ex);
+            }
+        });
+
+    });
+
+    
+
+
+</script>

@@ -72,9 +72,16 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult seeAvailableDay()
         {
-
-
+          
+            //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
             return View();
+        }
+
+        public JsonResult getAvailableDay()
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+
+            return Json(mo.getRoomDay(), JsonRequestBehavior.AllowGet);
         }
 
     }
