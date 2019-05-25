@@ -65,23 +65,17 @@
         var dateFormat = "dd/mm/yy",
             fechaLlegada = $("#fechaLlegada").datepicker({ minDate: 0, dateFormat: dateFormat })
                 .on("change", function () {
-                    fechaSalida.datepicker("option", "minDate", getDate(this));
+                    var fecha = $("#fechaLlegada").datepicker("getDate");
+                    fecha.setDate(fecha.getDate() + 1); 
+                    fechaSalida.datepicker("option", "minDate", fecha);
                     fechaSalida.datepicker("setDate", "dd/mm/aaaa")
                 }),
             fechaSalida = $("#fechaSalida").datepicker({ minDate: 0, dateFormat: dateFormat })
                 .on("change", function () {
-                    fechaLlegada.datepicker("option", "maxDate", getDate(this));
+                    var fecha = $("#fechaSalida").datepicker("getDate");
+                    fecha.setDate(fecha.getDate()); 
+                    fechaLlegada.datepicker("option", "maxDate", fecha);
                 });
-
-        function getDate(element) {
-            var date;
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
-                date = null;
-            }
-            return date;
-        }
     });
 
     $("#Aceptar").click("click", function () {
