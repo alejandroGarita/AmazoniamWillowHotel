@@ -63,6 +63,12 @@
     @Html.Label("Tarjeta de credito:")
     <input type="text" id="tarjeta" name="tarjeta" class="form-control" />
     <p id="spanTarjeta" class="text-danger"></p>
+    @Html.Label("Fecha de vencimiento:")
+    <input type="text" id="fechaV" name="fechaV" class="form-control" />
+    <p id="spanFechaV" class="text-danger"></p>
+    @Html.Label("Código de Seguridad (cvv):")
+    <input type="text" id="codigoS" name="CodigoS" class="form-control" />
+    <p id="spanCodigoS" class="text-danger"></p>
     <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
     <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-default">
     @using (Html.BeginForm("ReservationInformation", "Reservation", FormMethod.Post, new { id = "myForm" }))
@@ -75,7 +81,15 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('#tarjeta').mask("9999 9999 9999 9999");
+        $('#fechaV').mask("99/99");
+        $('#codigoS').mask("999");
+    });  
+
     $("#Aceptar").click("click", function () {
+        document.getElementById("spanCodigoS").innerHTML = "";
+        document.getElementById("spanFechaV").innerHTML = "";
         document.getElementById("spanTarjeta").innerHTML = "";
         document.getElementById("spanCorreo").innerHTML = "";
         document.getElementById("spanNombre").innerHTML = "";
@@ -86,6 +100,8 @@
         var apellidos = $("#apellidos").val();
         var correo = $("#correo").val();
         var tarjeta = $("#tarjeta").val();
+        var fechaV = $("#fechaV").val();
+        var codigoS = $("#codigoS").val();
         var numero = $("#numero").val();
         var monto = $("#monto").val();
         var fechaLlegada = $("#fechaLlegada").val();
@@ -95,30 +111,38 @@
             if (nombre != "" && apellidos != "") {
                 if (correo != "") {
                     if (tarjeta != "") {
-                        var md = $("#processing-modal");
-                        md.modal('show');
+                        if (fechaV != "") {
+                            if (codigoS != "") {
+                                var md = $("#processing-modal");
+                                md.modal('show');
 
-                        $.ajax({
-                            type: 'POST',
-                            url: "/Reservation/makeReservation",
-                            dataType: 'json',
-                            data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida, monto: monto },
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "/Reservation/makeReservation",
+                                    dataType: 'json',
+                                    data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida, monto: monto },
 
-                            success: function (makeReservation1) {
-                                if (makeReservation1 != "") {
-                                    md.modal('hide');
-                                    document.getElementById('nombreCompleto').value = makeReservation1.nombre;
-                                    document.getElementById('correo_').value = makeReservation1.correo;
-                                    document.getElementById('numeroReserva').value = makeReservation1.numeroReserva;
-                                    document.getElementById('montoR').value = makeReservation1.monto;
-                                    $("#myForm").submit();
-                                }//if retorno algo
-                            },
-                            error: function (ex) {
-                                md.modal('hide');
-                                alert('Fallo al procesar la reservación.' + ex);
-                            }
-                        });
+                                    success: function (makeReservation1) {
+                                        if (makeReservation1 != "") {
+                                            md.modal('hide');
+                                            document.getElementById('nombreCompleto').value = makeReservation1.nombre;
+                                            document.getElementById('correo_').value = makeReservation1.correo;
+                                            document.getElementById('numeroReserva').value = makeReservation1.numeroReserva;
+                                            document.getElementById('montoR').value = makeReservation1.monto;
+                                            $("#myForm").submit();
+                                        }//if retorno algo
+                                    },
+                                    error: function (ex) {
+                                        md.modal('hide');
+                                        alert('Fallo al procesar la reservación.' + ex);
+                                    }
+                                });
+                            } else {
+                                document.getElementById("spanCodigoS").innerHTML = "Se requiere el código de seguridad (cvv) de la tarjeta para procesar la reservación";
+                            }//if-else codigoS
+                        } else {
+                            document.getElementById("spanFechaV").innerHTML = "Se requiere la fecha de vencimiento de la tarjeta para procesar la reservación";
+                        }//if-else fechaV
                     } else {
                         document.getElementById("spanTarjeta").innerHTML = "Se requiere una tarjeta para procesar la reservación";
                     }//if-else tarjeta
