@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Hotel_Amazonian_WillowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="id" />
@@ -241,6 +241,11 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="sp_AvailabilityDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_check_Rooms_Available" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="llegada" Type="datetime" Mode="In" />
+          <Parameter Name="salida" Type="datetime" Mode="In" />
+          <Parameter Name="tipo" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_checkAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idTipoHabitacion" Type="int" Mode="In" />
           <Parameter Name="fechaInicio" Type="date" Mode="In" />
@@ -321,8 +326,7 @@
             <End Role="Tipo_Habitacion" EntitySet="Tipo_Habitacion" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Hotel_Amazonian_WillowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -646,10 +650,10 @@
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_freeRoom" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_freeRoom_Result)">
-            <Parameter Name="numero" Mode="In" Type="Int32" />
+          <Parameter Name="numero" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_InsertarImagen">
-            <Parameter Name="imagen" Mode="In" Type="Binary" />
+          <Parameter Name="imagen" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_makeReservation" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_makeReservation_Result)">
             <Parameter Name="identificacion" Mode="In" Type="String" />
@@ -675,13 +679,23 @@
             <Parameter Name="monto" Mode="In" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="FreeRoom">
-            <Parameter Name="numero" Mode="In" Type="Int32" />
+          <Parameter Name="numero" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getRoomDay" ReturnType="Collection(Hotel_Amazonian_WillowModel.getRoomDay_Result)" />
           <FunctionImport Name="CheckAvailability" ReturnType="Collection(Hotel_Amazonian_WillowModel.CheckAvailability_Result)">
             <Parameter Name="idTipoHabitacion" Mode="In" Type="Int32" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_check_Rooms_Available" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_check_Rooms_Available_Result)">
+            <Parameter Name="llegada" Mode="In" Type="DateTime" />
+            <Parameter Name="salida" Mode="In" Type="DateTime" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CheckRoomsAvailable" ReturnType="Collection(Hotel_Amazonian_WillowModel.sp_check_Rooms_Available_Result)">
+            <Parameter Name="llegada" Mode="In" Type="DateTime" />
+            <Parameter Name="salida" Mode="In" Type="DateTime" />
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_AvailabilityDay_Result">
@@ -738,6 +752,11 @@
           <Property Type="String" Name="descripcion" Nullable="true" />
           <Property Type="Double" Name="tarifa" Nullable="true" />
           <Property Type="Int32" Name="imagen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_check_Rooms_Available_Result">
+          <Property Type="Int32" Name="habitacion" Nullable="false" />
+          <Property Type="String" Name="tipo" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="tarifa" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -945,6 +964,24 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="tarifa" ColumnName="tarifa" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_check_Rooms_Available" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_check_Rooms_Available">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_check_Rooms_Available_Result">
+                <ScalarProperty Name="habitacion" ColumnName="habitacion" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckRoomsAvailable" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_check_Rooms_Available">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Amazonian_WillowModel.sp_check_Rooms_Available_Result">
+                <ScalarProperty Name="habitacion" ColumnName="habitacion" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="tarifa" ColumnName="tarifa" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
