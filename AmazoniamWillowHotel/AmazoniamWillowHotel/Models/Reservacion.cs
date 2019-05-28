@@ -20,6 +20,8 @@ namespace AmazoniamWillowHotel.Models
         public string apellidos { get; set; }
         public string correo { get; set; }
         public string tarjeta { get; set; }
+        public string fechaVencimiento { get; set; }
+        public string codigoSeguridad { get; set; }
         public System.DateTime fechaInicio { get; set; }
         public System.DateTime fechaFin { get; set; }
         public double monto { get; set; }

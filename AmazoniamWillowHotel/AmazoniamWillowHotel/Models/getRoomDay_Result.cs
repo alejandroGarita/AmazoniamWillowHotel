@@ -13,9 +13,9 @@ namespace AmazoniamWillowHotel.Models
     
     public partial class getRoomDay_Result
     {
-        public int idHabitacion { get; set; }
         public int numero { get; set; }
-        public int estado { get; set; }
-        public int tipo { get; set; }
+        public string tipo { get; set; }
+        public string estado { get; set; }
+        public double tarifa { get; set; }
     }
 }

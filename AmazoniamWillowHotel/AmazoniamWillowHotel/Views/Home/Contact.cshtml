@@ -1,10 +1,21 @@
-﻿@foreach (var item in (List<AmazoniamWillowHotel.Models.Pagina>)ViewData["Contact"])
+﻿@foreach (var item in (List<AmazoniamWillowHotel.Models.Pagina>)ViewData["Contactenos"])
 {
+    foreach (var info in (List<AmazoniamWillowHotel.Models.Info>)@item.Info.ToList())
+    {
+        var base64ImagenHotel = Convert.ToBase64String(info.Imagen1.imagen1);
+        string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
+
         <address>
-            <h4>@item.Descripcion</h4>
-            <strong>Consulting:</strong>   <a href="hotelwillow@gamil.com">hotelwillow@gamil.com</a><br />
+            @{
+                var parrrafos = info.descripcion.Split('^');
+                foreach (String p in parrrafos)
+                {
+                    <p>@p</p><br />
+                }
+            }
         </address>
-        <div class="col-xs-3">
-            <img class="mostrarModal" width="300%" alt="Contáctenos" src="~/Public/images/@item.Imagen">
+        <div class="col-xs-12" style="text-align: center;">
+            <img width="50%" alt="Contáctenos" src="@imgSrcImagenHotel">
         </div>
+    }
 }

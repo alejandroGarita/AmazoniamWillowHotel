@@ -30,7 +30,9 @@ namespace AmazoniamWillowHotel.Controllers
                     {
                         if (model.Administrador.Where(x => x.correo == username && x.contrasenna == password).FirstOrDefault() != null)
                         {
+                            Models.Administrador administrador = model.Administrador.Where(x => x.correo == username && x.contrasenna == password).FirstOrDefault();
                             Session["username"] = username;
+                            Session["nombre"] = administrador.nombre;
                             return View();
                         }
                         else

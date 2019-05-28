@@ -23,6 +23,7 @@ namespace AmazoniamWillowHotel.Models
         }
     
         public int id_Imagen { get; set; }
+        public string nombre { get; set; }
         public System.Guid id_Imagen_FileStream { get; set; }
         public byte[] imagen1 { get; set; }
     

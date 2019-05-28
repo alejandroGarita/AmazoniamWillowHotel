@@ -120,7 +120,7 @@
                                     type: 'POST',
                                     url: "/Reservation/makeReservation",
                                     dataType: 'json',
-                                    data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida, monto: monto },
+                                    data: { identificacion: identificacion, nombre: nombre, apellidos: apellidos, correo: correo, tarjeta: tarjeta, fechaV: fechaV, codigoS: codigoS, numero: numero, fechaLlegada: fechaLlegada, fechaSalida: fechaSalida, monto: monto },
 
                                     success: function (makeReservation1) {
                                         if (makeReservation1 != "") {

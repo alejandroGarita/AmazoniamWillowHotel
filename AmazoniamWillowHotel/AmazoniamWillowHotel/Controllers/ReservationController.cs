@@ -79,13 +79,13 @@ namespace AmazoniamWillowHotel.Controllers
             }
         }//checkAvailability
 
-        public JsonResult makeReservation(String identificacion, String nombre, String apellidos, String correo, String tarjeta, int numero, String fechaLlegada, String fechaSalida, float monto)
+        public JsonResult makeReservation(String identificacion, String nombre, String apellidos, String correo, String tarjeta, String fechaV, String codigoS, int numero, String fechaLlegada, String fechaSalida, float monto)
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
                 DateTime fechaLlegada1 = DateTime.Parse(fechaLlegada);
                 DateTime fechaSalida1 = DateTime.Parse(fechaSalida);
-                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, numero, fechaLlegada1, fechaSalida1, monto);
+                ObjectResult<Models.MakeReservation_Result> result = mo.MakeReservation(identificacion, nombre, apellidos, correo, tarjeta, fechaV, codigoS,numero, fechaLlegada1, fechaSalida1, monto);
 
                 Models.MakeReservation_Result makeReservation1 = new Models.MakeReservation_Result();
                 foreach (Models.MakeReservation_Result makeReservation in result)
