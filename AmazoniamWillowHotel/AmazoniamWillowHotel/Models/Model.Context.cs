@@ -255,5 +255,18 @@ namespace AmazoniamWillowHotel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckRoomsAvailable_Result>("CheckRoomsAvailable", llegadaParameter, salidaParameter, tipoParameter);
         }
+    
+        public virtual int InsertImage(string nombre, byte[] imagen)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("imagen", imagen) :
+                new ObjectParameter("imagen", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertImage", nombreParameter, imagenParameter);
+        }
     }
 }
