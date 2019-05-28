@@ -11,11 +11,13 @@ namespace AmazoniamWillowHotel.Models
 {
     using System;
     
-    public partial class MakeReservation_Result
+    public partial class sp_insertImage_Result
     {
-        public string nombre { get; set; }
-        public Nullable<int> numeroReserva { get; set; }
-        public string correo { get; set; }
-        public Nullable<double> monto { get; set; }
+        public Nullable<int> ErrorNumber { get; set; }
+        public Nullable<int> ErrorSeverity { get; set; }
+        public Nullable<int> ErrorState { get; set; }
+        public string ErrorProcedure { get; set; }
+        public Nullable<int> ErrorLine { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-                ViewData["Contact"] = mo.Pagina.ToList();
+                ViewData["Contactenos"] = mo.Pagina.Where(x => x.nombre == "Contáctenos").Include(p => p.Info).Include(p => p.Info.Select(x => x.Imagen1)).ToList();
             }
 
             return View();
@@ -57,7 +57,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-                ViewData["types"] = mo.Tipo_Habitacion.ToList();
+                ViewData["Tarifas"] = mo.Tipo_Habitacion.Include(p => p.Imagen1).Include(p => p.Caracteristica).ToList();
             }
             return View();
         }

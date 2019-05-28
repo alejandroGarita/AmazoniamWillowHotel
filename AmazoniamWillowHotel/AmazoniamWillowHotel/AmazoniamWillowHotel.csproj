@@ -173,6 +173,9 @@
     <Compile Include="Models\CheckAvailability_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckRoomsAvailable_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Estado.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -224,13 +227,22 @@
     <Compile Include="Models\sp_checkAvailability_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_check_Rooms_Available_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_freeRoom_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_getFacilities_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_insertImage_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_makeReservation_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_RoomDay_Result.cs">
+    <Compile Include="Models\sp_roomDay_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tipo_Habitacion.cs">
@@ -365,6 +377,7 @@
     <Content Include="Views\Facilitie\Facilities.cshtml" />
     <Content Include="Views\Admin\InsertFacilitie.cshtml" />
     <Content Include="Views\Admin\seeAvailableDay.cshtml" />
+    <Content Include="Views\Admin\CheckAvailability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

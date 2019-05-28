@@ -30,7 +30,9 @@ namespace AmazoniamWillowHotel.Controllers
                     {
                         if (model.Administrador.Where(x => x.correo == username && x.contrasenna == password).FirstOrDefault() != null)
                         {
+                            Models.Administrador administrador = model.Administrador.Where(x => x.correo == username && x.contrasenna == password).FirstOrDefault();
                             Session["username"] = username;
+                            Session["nombre"] = administrador.nombre;
                             return View();
                         }
                         else
@@ -82,6 +84,26 @@ namespace AmazoniamWillowHotel.Controllers
             var mo = new Models.Hotel_Amazonian_WillowEntities();
 
             return Json(mo.getRoomDay(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CheckAvailability()
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["types"] = mo.Tipo_Habitacion.ToList();
+            }
+            return View();
+        }
+
+        public JsonResult consultarDisponibilidad(int TipoHabitacion, String fechaLlegada, String fechaSalida)
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+
+            DateTime llegada = DateTime.Parse(fechaLlegada);
+            DateTime salida = DateTime.Parse(fechaSalida);
+
+
+            return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
         }
 
     }

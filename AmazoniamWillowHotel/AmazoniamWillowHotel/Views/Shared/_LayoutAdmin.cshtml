@@ -39,7 +39,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="salir">
                         @if (Session["username"] != null)
                         {
-                            <a href="~/Admin/Exit"><i class="menu"></i>Cerrar sesión</a>
+                            <p>Bienvenido @Session["nombre"] <a href="~/Admin/Exit"><i class="menu"></i>Cerrar sesión</a></p>
+
+                        }
+                        else
+                        {
+                            <a href="~/Home/Index"><i class="menu"></i>Página Cliente</a>
                         }
                     </div>
                     <div class="nombre">
