@@ -1,0 +1,26 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Administrar Habitaciones";
+}
+
+<h2>Administrar Habitaciones</h2>
+<br />
+<br />
+
+@foreach (var item in (List<AmazoniamWillowHotel.Models.Tipo_Habitacion>)ViewData["AdministrarHabitaciones"])
+{
+    <div class="row">
+        <div class="col-sm-9">
+            <h3>@item.titulo @Html.ActionLink("cambiar descripción", "modifyRoomType", new { type = item.id })</h3>
+            <br />
+            @foreach (var habitacion in (List<AmazoniamWillowHotel.Models.Habitacion>)@item.Habitacion.ToList())
+            {
+                <p>> @habitacion.numero</p>
+                <br />
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+}
