@@ -716,6 +716,10 @@
             <Parameter Name="salida" Mode="In" Type="DateTime" />
             <Parameter Name="tipo" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="InsertImage">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="imagen" Mode="In" Type="Binary" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_AvailabilityDay_Result">
           <Property Type="Int32" Name="idHabitacion" Nullable="false" />
@@ -1046,6 +1050,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertImage" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_insertImage" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
