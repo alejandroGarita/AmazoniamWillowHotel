@@ -107,6 +107,15 @@ namespace AmazoniamWillowHotel.Controllers
             return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult ManageRooms()
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+            }
+            return View();
+        }//ManageRooms
+
         [HttpGet]
         public ActionResult modifyRoomType(int? type) {
 
