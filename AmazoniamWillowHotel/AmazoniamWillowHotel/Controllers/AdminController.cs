@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -104,6 +105,20 @@ namespace AmazoniamWillowHotel.Controllers
 
 
             return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult modifyRoomType(int? type) {
+
+
+            if (type != null)
+            {
+                var mo = new Models.Hotel_Amazonian_WillowEntities();
+                ViewData["information"] = mo.Tipo_Habitacion.Where(x => x.id == type).Include(x => x.Imagen1).FirstOrDefault();
+            }
+            
+
+            return View();
         }
 
     }
