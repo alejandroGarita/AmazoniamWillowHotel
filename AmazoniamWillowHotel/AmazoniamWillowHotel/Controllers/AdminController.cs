@@ -109,7 +109,7 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult ManageRooms()
         {
-            if (isNotLogin())
+            if (!isNotLogin())
             {
                 using (var mo = new Models.Hotel_Amazonian_WillowEntities())
                 {
@@ -117,7 +117,7 @@ namespace AmazoniamWillowHotel.Controllers
                 }
                 return View();
             }
-            return View();
+            return View("Login");
         }//ManageRooms
 
         [HttpGet]

@@ -24,10 +24,17 @@
                 <tbody id="body">
                     @foreach (var habitacion in (List<AmazoniamWillowHotel.Models.Habitacion>)@item.Habitacion.ToList())
                     {
-                        <tr>
-                            <td>@habitacion.numero</td>
-                            <td>@habitacion.estado</td>
-                        </tr>
+                    <tr>
+                        <td>@habitacion.numero</td>
+                        @if (@habitacion.estado == 1)
+                        {
+                            <td><input type="checkbox" id="@habitacion.id" name="@habitacion.id" checked/></td>
+                        }
+                        else
+                        {
+                            <td><input type="checkbox"/></td>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>
