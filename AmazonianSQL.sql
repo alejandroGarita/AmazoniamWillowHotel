@@ -221,6 +221,8 @@ AS BEGIN
 	
 	Insert into Imagen(nombre, Imagen) Values(@nombre, @imagen)
 
+	SELECT SCOPE_IDENTITY() AS id_Imagen
+
 	COMMIT TRANSACTION;
 	RETURN (1);
 	END TRY  
