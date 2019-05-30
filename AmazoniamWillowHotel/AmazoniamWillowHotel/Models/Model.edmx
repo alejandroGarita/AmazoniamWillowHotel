@@ -744,11 +744,6 @@
           </FunctionImport>
           <FunctionImport Name="sp_deletePromotion">
             <Parameter Name="id" Mode="In" Type="Int32" />
-
-          <FunctionImport Name="InsertImage">
-            <Parameter Name="nombre" Mode="In" Type="String" />
-            <Parameter Name="imagen" Mode="In" Type="Binary" />
-
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_AvailabilityDay_Result">
@@ -1141,11 +1136,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
           <FunctionImportMapping FunctionImportName="sp_deletePromotion" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_deletePromotion" />
-
-          <FunctionImportMapping FunctionImportName="InsertImage" FunctionName="Hotel_Amazonian_WillowModel.Store.sp_insertImage" />
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
