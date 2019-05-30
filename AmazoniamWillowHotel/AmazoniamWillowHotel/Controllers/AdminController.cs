@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace AmazoniamWillowHotel.Controllers
 {
@@ -15,8 +16,6 @@ namespace AmazoniamWillowHotel.Controllers
                 return View();
             else return View("Index");
         }
-
-
 
         public ActionResult Index()
         {
@@ -134,7 +133,52 @@ namespace AmazoniamWillowHotel.Controllers
             return View();
         }
 
-    }
+        public ActionResult updateRoomType(int id, String titulo, double rate, String description, int imagenVieja, HttpPostedFileBase img)
+        {
+            Models.Tipo_Habitacion tipo_Habitacion = new Models.Tipo_Habitacion();
+            tipo_Habitacion.id = id;
+            tipo_Habitacion.titulo = titulo;
+            tipo_Habitacion.tarifa = rate;
+            tipo_Habitacion.descripcion = description;
 
+            if (img != null)
+            {
+                try
+                {
+                    if (img.ContentLength > 0)
+                    {
+                        byte[] imageData = null;
+                        using (var binaryReader = new BinaryReader(img.InputStream))
+                        {
+                            imageData = binaryReader.ReadBytes(img.ContentLength);
+                        }
+                        using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+                        {
+                            mo.InsertImage(img.FileName, imageData);
+                        }
 
-}
+                    }//if
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex;
+                }//try-catch.
+            }
+            else
+            {
+                tipo_Habitacion.imagen = imagenVieja;
+            }//if-else
+
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                mo.Entry(tipo_Habitacion).State = EntityState.Modified;
+                mo.SaveChanges();
+
+                ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+            }
+
+            return View("ManageRooms");
+        }//updateRoomType
+
+    }//class
+}//namespace

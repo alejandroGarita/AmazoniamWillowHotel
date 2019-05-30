@@ -17,8 +17,10 @@
     {
 
         <div class="row">
+            <input type="hidden" id="id" name="id" class="form-control" value="@type.id" />
             <div class="col-sm-2">
                 @Html.Label(type.titulo)
+                <input type="hidden" id="titulo" name="titulo" class="form-control" value="@type.titulo" />
             </div>
             <div class="col-sm-3 text-center">
                 @Html.Label("Tarifa diaria: ")
@@ -41,6 +43,7 @@
                 @Html.Label("Imagen actual")
                 <br />
                 <img src="@imgSrcImagenHotel" width="100%" />
+                <input type="hidden" id="imagenVieja" name="imagenVieja" class="form-control" value="@type.Imagen1.id_Imagen" />
             </div>
             <div class="col-sm-4">
 
