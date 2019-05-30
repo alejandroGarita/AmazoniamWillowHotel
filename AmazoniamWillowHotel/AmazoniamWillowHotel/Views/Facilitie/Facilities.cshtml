@@ -11,15 +11,14 @@
 
     foreach (var info in (List<AmazoniamWillowHotel.Models.Info>)@item.Info.ToList())
     {
-        var base64ImagenHotel = Convert.ToBase64String(info.Imagen1.imagen1);
-        string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
-        if (info.descripcion != null){
-            <div class="center-block">
-                
-                <div class="col-sm-4">
-                    <h3>@info.titulo</h3>
-                    <img class="mostrarModal" width="150" height="100" alt="@info.descripcion" src="@imgSrcImagenHotel">
-                </div>
+        if (info.descripcion != null)
+        {
+            <h3>@info.titulo</h3>
+            <br />
+            var base64ImagenHotel = Convert.ToBase64String(info.Imagen1.imagen1);
+            string imgSrcImagenHotel = String.Format("data:image/gif;base64,{0}", base64ImagenHotel);
+            <div class="col-sm-4">
+                <img class="mostrarModal" width="100%" alt="@info.descripcion" src="@imgSrcImagenHotel">
             </div>
         }
     }
@@ -36,6 +35,7 @@
             <div class="modal-body">
             </div>
         </div>
+
     </div>
 </div>
 <script>
@@ -47,8 +47,9 @@
             var img = $(this).attr('src');
 
             modal.find('.modal-title').text(titulo);
-            modal.find('.modal-body').html('<img width="50%" src="' + img + '" />');
+            modal.find('.modal-body').html('<img width="100%" src="' + img + '" />');
             modal.modal();
+
         });
     });
 </script>

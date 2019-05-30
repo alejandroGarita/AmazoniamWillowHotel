@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -74,7 +73,12 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult seeAvailableDay()
         {
+<<<<<<< HEAD
 
+=======
+          
+            //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
+>>>>>>> parent of c8f15ce... fonso que miedo este commit
             return View();
         }
 
@@ -82,7 +86,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             var mo = new Models.Hotel_Amazonian_WillowEntities();
 
-            return Json(mo.getRoomsDay(), JsonRequestBehavior.AllowGet);
+            return Json(mo.getRoomDay(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CheckAvailability()
@@ -105,6 +109,7 @@ namespace AmazoniamWillowHotel.Controllers
             return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
 
 
         public ActionResult insertPromotionView()
@@ -281,3 +286,9 @@ namespace AmazoniamWillowHotel.Controllers
 
     }//class
 }//namespace
+=======
+    }
+
+
+}
+>>>>>>> parent of c8f15ce... fonso que miedo este commit
