@@ -11,13 +11,8 @@ namespace AmazoniamWillowHotel.Models
 {
     using System;
     
-    public partial class sp_insertImage_Result
+    public partial class InsertImage_Result
     {
-        public Nullable<int> ErrorNumber { get; set; }
-        public Nullable<int> ErrorSeverity { get; set; }
-        public Nullable<int> ErrorState { get; set; }
-        public string ErrorProcedure { get; set; }
-        public Nullable<int> ErrorLine { get; set; }
-        public string ErrorMessage { get; set; }
+        public Nullable<decimal> id_Imagen { get; set; }
     }
 }

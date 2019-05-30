@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Data.Entity.Core.Objects;
 
 namespace AmazoniamWillowHotel.Controllers
 {
@@ -105,8 +106,6 @@ namespace AmazoniamWillowHotel.Controllers
             return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
         }
 
-
-
         public ActionResult insertPromotionView()
         {
 
@@ -201,10 +200,6 @@ namespace AmazoniamWillowHotel.Controllers
 
         }//end method
 
-    }
-
-}//end class
-
         public ActionResult ManageRooms()
         {
             if (!isNotLogin())
@@ -253,7 +248,12 @@ namespace AmazoniamWillowHotel.Controllers
                         }
                         using (var mo = new Models.Hotel_Amazonian_WillowEntities())
                         {
-                            mo.InsertImage(img.FileName, imageData);
+                            ObjectResult<Models.InsertImage_Result> result = mo.InsertImage(img.FileName, imageData);
+
+                            Models.InsertImage_Result insertImage1 = new Models.InsertImage_Result();
+                            foreach (Models.InsertImage_Result insertImage  in result)
+                                insertImage1 = insertImage;
+                            tipo_Habitacion.imagen = Convert.ToInt32(insertImage1.id_Imagen);
                         }
 
                     }//if

@@ -11,7 +11,7 @@ namespace AmazoniamWillowHotel.Models
 {
     using System;
     
-    public partial class getRoomDay_Result
+    public partial class getRoomsDay_Result
     {
         public int numero { get; set; }
         public string tipo { get; set; }
