@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace AmazoniamWillowHotel.Controllers
 {
@@ -16,12 +17,10 @@ namespace AmazoniamWillowHotel.Controllers
             else return View("Index");
         }
 
-
-
         public ActionResult Index()
         {
             if (isNotLogin())
-            { 
+            {
                 if (Request.Form["username"] != null && Request.Form["password"] != null)
                 {
                     String username = Request.Form["username"];
@@ -75,7 +74,7 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult seeAvailableDay()
         {
-          
+
             return View();
         }
 
@@ -107,6 +106,7 @@ namespace AmazoniamWillowHotel.Controllers
         }
 
 
+
         public ActionResult insertPromotionView()
         {
 
@@ -123,7 +123,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             using (var mo = new Models.Hotel_Amazonian_WillowEntities())
             {
-      
+
                 ViewData["Promotions"] = mo.Promocion.Include(p => p.Tipo_Habitacion).Include(p => p.Tipo_Habitacion.Imagen1).ToList();
             }
             return View();
@@ -204,3 +204,80 @@ namespace AmazoniamWillowHotel.Controllers
     }
 
 }//end class
+
+        public ActionResult ManageRooms()
+        {
+            if (!isNotLogin())
+            {
+                using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+                {
+                    ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+                }
+                return View();
+            }
+            return View("Login");
+        }//ManageRooms
+
+        [HttpGet]
+        public ActionResult modifyRoomType(int? type) {
+
+
+            if (type != null)
+            {
+                var mo = new Models.Hotel_Amazonian_WillowEntities();
+                ViewData["information"] = mo.Tipo_Habitacion.Where(x => x.id == type).Include(x => x.Imagen1).FirstOrDefault();
+            }
+
+
+            return View();
+        }
+
+        public ActionResult updateRoomType(int id, String titulo, double rate, String description, int imagenVieja, HttpPostedFileBase img)
+        {
+            Models.Tipo_Habitacion tipo_Habitacion = new Models.Tipo_Habitacion();
+            tipo_Habitacion.id = id;
+            tipo_Habitacion.titulo = titulo;
+            tipo_Habitacion.tarifa = rate;
+            tipo_Habitacion.descripcion = description;
+
+            if (img != null)
+            {
+                try
+                {
+                    if (img.ContentLength > 0)
+                    {
+                        byte[] imageData = null;
+                        using (var binaryReader = new BinaryReader(img.InputStream))
+                        {
+                            imageData = binaryReader.ReadBytes(img.ContentLength);
+                        }
+                        using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+                        {
+                            mo.InsertImage(img.FileName, imageData);
+                        }
+
+                    }//if
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex;
+                }//try-catch.
+            }
+            else
+            {
+                tipo_Habitacion.imagen = imagenVieja;
+            }//if-else
+
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+                mo.Entry(tipo_Habitacion).State = EntityState.Modified;
+                mo.SaveChanges();
+
+                ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+            }
+
+            return View("ManageRooms");
+        }//updateRoomType
+
+    }//class
+}//namespace
