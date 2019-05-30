@@ -69,8 +69,8 @@
     @Html.Label("Código de Seguridad (cvv):")
     <input type="text" id="codigoS" name="CodigoS" class="form-control" />
     <p id="spanCodigoS" class="text-danger"></p>
-    <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-primary">
-    <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-danger">
+    <input value="Aceptar" id="Aceptar" name="Aceptar" type="button" class="btn btn-default">
+    <input value="Cancelar" id="Cancelar" name="Cancelar" type="button" class="btn btn-default">
     @using (Html.BeginForm("ReservationInformation", "Reservation", FormMethod.Post, new { id = "myForm" }))
     {
         <input type="hidden" id="nombreCompleto" name="nombreCompleto" class="form-control" />
