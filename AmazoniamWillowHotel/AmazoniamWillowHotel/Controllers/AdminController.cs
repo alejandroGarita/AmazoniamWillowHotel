@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -75,7 +76,6 @@ namespace AmazoniamWillowHotel.Controllers
         public ActionResult seeAvailableDay()
         {
           
-            //ViewData["Status"] = new SelectList(model.getStatus(), "Id_Estado", "Nombre"); ;
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace AmazoniamWillowHotel.Controllers
         {
             var mo = new Models.Hotel_Amazonian_WillowEntities();
 
-            return Json(mo.getRoomDay(), JsonRequestBehavior.AllowGet);
+            return Json(mo.getRoomsDay(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CheckAvailability()
@@ -106,7 +106,101 @@ namespace AmazoniamWillowHotel.Controllers
             return Json(mo.CheckRoomsAvailable(llegada, salida, TipoHabitacion), JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult insertPromotionView()
+        {
+
+            return View();
+        }
+
+        public ActionResult updatePromotionView()
+        {
+
+            return View();
+        }
+
+        public ActionResult showPromotion()
+        {
+            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            {
+      
+                ViewData["Promotions"] = mo.Promocion.Include(p => p.Tipo_Habitacion).Include(p => p.Tipo_Habitacion.Imagen1).ToList();
+            }
+            return View();
+        }
+
+        public JsonResult getTypes()
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+
+            return Json(mo.sp_getTypes(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getPromotion()
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+            return Json(mo.sp_getPromotions(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getOnePromotion(int id)
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+            return Json(mo.sp_getPromotion(id), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeletePromotion(int id)
+        {
+            var mo = new Models.Hotel_Amazonian_WillowEntities();
+            mo.sp_deletePromotion(id);
+            return Json("Eliminado", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult insertPromotion(string comment, int idescuento, DateTime iFechaInicio, DateTime iFechaFinal, int tipo) {
+
+            if (comment != null && idescuento != 0 && tipo != 0
+                && iFechaFinal != null && iFechaInicio != null)
+            {
+                var mo = new Models.Hotel_Amazonian_WillowEntities();
+
+                mo.Promocion.Add(new Models.Promocion
+                {
+                    descripcion = comment,
+                    descuento = idescuento,
+                    inicio = iFechaInicio,
+                    fin = iFechaFinal,
+                    tipoHabitacion = tipo
+                });
+                mo.SaveChanges();
+                return Json("OK", JsonRequestBehavior.AllowGet);
+            }//end validation nulls
+
+            return Json("ERROR", JsonRequestBehavior.AllowGet);
+
+        }//end method
+
+        public JsonResult updatePromotion(int id,string comment, int idescuento, DateTime iFechaInicio, DateTime iFechaFinal, int tipo)
+        {
+
+            if (comment != null && idescuento != 0 && tipo != 0
+                && iFechaFinal != null && iFechaInicio != null)
+            {
+                var mo = new Models.Hotel_Amazonian_WillowEntities();
+                var promo = mo.Promocion.Where(d => d.id == id).First();
+                promo.id = id;
+                promo.inicio = iFechaInicio;
+                promo.descripcion = comment;
+                promo.fin= iFechaFinal;
+                promo.tipoHabitacion = tipo;
+                promo.descuento = idescuento;
+
+                mo.SaveChanges();
+                return Json("OK", JsonRequestBehavior.AllowGet);
+            }//end validation nulls
+
+            return Json("ERROR", JsonRequestBehavior.AllowGet);
+
+        }//end method
+
     }
 
-
-}
+}//end class

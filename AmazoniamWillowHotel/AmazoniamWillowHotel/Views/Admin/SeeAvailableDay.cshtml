@@ -4,12 +4,13 @@
 }
 
 <h2>Disponibilidad de Hoy</h2>
-<table class="table table-striped w-auto">
+<table class="table table-responsive">
     <thead>
         <tr>
             <th scope="col">Habitación</th>
             <th scope="col">Tipo</th>
             <th scope="col">Estado</th>
+            <th scope="col">Tarifa</th>
         </tr>
     </thead>
     <tbody id="body"></tbody>
@@ -28,8 +29,10 @@
                
                 for (var i = 0; i < roomDay.length; i++) {
                     bodyTable += "<tr><th scope='row'>" + roomDay[i].numero + "</th>";
-                    bodyTable += "<td>" + roomDay[i].tipo + "</td>";
-                    bodyTable += "<td>" + roomDay[i].estado + "</td></tr>";
+                    bodyTable += "<td scope='rowgroup'>" + roomDay[i].tipo + "</td>";
+                    bodyTable += "<td scope='rowgroup'>" + roomDay[i].estado + "</td>";
+                    bodyTable += "<td scope='rowgroup'>" + roomDay[i].tarifa + "</td></tr>";
+
                 }
                 $("#body").html(bodyTable);
             },

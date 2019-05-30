@@ -10,13 +10,13 @@
 namespace AmazoniamWillowHotel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Administrador
+    public partial class sp_getTypes_Result
     {
         public int id { get; set; }
-        public string correo { get; set; }
-        public string contrasenna { get; set; }
-        public string nombre { get; set; }
+        public string titulo { get; set; }
+        public double tarifa { get; set; }
+        public string descripcion { get; set; }
+        public int imagen { get; set; }
     }
 }
