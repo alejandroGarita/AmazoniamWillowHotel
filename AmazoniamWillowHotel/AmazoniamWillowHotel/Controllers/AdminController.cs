@@ -109,11 +109,15 @@ namespace AmazoniamWillowHotel.Controllers
 
         public ActionResult ManageRooms()
         {
-            using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+            if (!isNotLogin())
             {
-                ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+                using (var mo = new Models.Hotel_Amazonian_WillowEntities())
+                {
+                    ViewData["AdministrarHabitaciones"] = mo.Tipo_Habitacion.Include(p => p.Habitacion).ToList();
+                }
+                return View();
             }
-            return View();
+            return View("Login");
         }//ManageRooms
 
         [HttpGet]
